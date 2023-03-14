@@ -2,7 +2,8 @@
 <html lang="en, pl">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="Style.css">
+    <link rel="stylesheet" href="Layout.css">
+    <link rel="stylesheet" href="FileTree.css">
     <title>Integrated Development Environment</title>
 </head>
 <body>
@@ -14,10 +15,78 @@
         <button class="menu-button">View</button>
     </div>
     <div class="files element">
-
+        <div class="bar">Project</div>
+        <div class="content tree">
+        <ul>
+            <li><details>
+                <summary><img src="Images/Blue.tif" alt="">   cp2020</summary>
+                <ul>
+                    <li>
+                        <details>
+                            <summary><img src="Images/Blue.tif" alt=""> base</summary>
+                            <ul>
+                                <li><img src="Images/file.png" alt="">  Workshop</li>
+                                <li><img src="Images/file.png" alt="">  Workplace</li>
+                                <li><img src="Images/file.png" alt="">  WorkplaceId</li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary><img src="Images/Blue.tif" alt=""> demo</summary>
+                            <ul>
+                                <li><img src="Images/file.png" alt="">  ToysWorkshop</li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li>
+                        <details>
+                            <summary><img src="Images/Blue.tif" alt=""> solution</summary>
+                            <ul>
+                                <li><img src="Images/file.png" alt="">  Pair</li>
+                                <li><img src="Images/file.png" alt="">  WorkplaceHolder</li>
+                                <li><img src="Images/file.png" alt="">  Workshop</li>
+                                <li><img src="Images/file.png" alt="">  WorkshopFactory</li>
+                                <li><img src="Images/file.png" alt="">  test</li>
+                            </ul>
+                        </details>
+                    </li>
+                    <li>
+                        <img src="Images/file.png" alt="">  cp2020.iml
+                    </li>
+                </ul>
+            </details></li>
+        </ul>
+        </div>
     </div>
     <div class="code element">
+        <div class="bar">
+        <button><img src="Images/file.png" alt="">  Pair.java</button>
+        </div>
+        <div class="content">
+        <code>
+            <pre>
+package cp2022.solution;
 
+public class Pair< T, W > {
+    private final T first;
+    private final W second;
+
+    public Pair(T t, W w) {
+        this.first = t;
+        this.second = w;
+    }
+
+    public T getFirst() {
+        return first;
+    }
+
+    public W getSecond() {
+        return second;
+    }
+}</pre>
+        </code>
+        </div>
     </div>
     <div class="fragment element">
 
