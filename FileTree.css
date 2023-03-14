@@ -5,14 +5,14 @@
     width: 1em;
 }
 
-ul {
+.tree ul {
     list-style: none;
     font-size: 1em;
     margin: 0 0 0 0;
     padding: 0 0 0 2em;
 }
 
-ul li {
+.tree ul li {
     position: relative;
 }
 
