@@ -2,57 +2,63 @@
 <html lang="en, pl">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="Layout.css">
-    <link rel="stylesheet" href="FileTree.css">
+    <link rel="stylesheet" href="Style/Layout.css">
+    <link rel="stylesheet" href="Style/FileTree.css">
+    <link rel="stylesheet" href="Style/Colors.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
+
     <title>Integrated Development Environment</title>
 </head>
 <body>
 <div class="grid-container">
     <div class="menu element">
-        <button class="menu-button">File</button>
-        <button class="menu-button">Edit</button>
-        <button class="menu-button">Options</button>
-        <button class="menu-button">View</button>
+        <button>File</button>
+        <button>Edit</button>
+        <button>Options</button>
+        <button>View</button>
+        <i id="dark-mode-toggle" class="bi bi-brightness-high-fill"></i>
     </div>
     <div class="files element">
-        <div class="bar">Project</div>
+        <div class="bar">
+            <div class="bar-item">Project</div>
+        </div>
         <div class="content tree">
         <ul>
             <li><details>
-                <summary><img src="Images/Blue.tif" alt="">   cp2020</summary>
+                <summary><img src="" class="folder" alt="">   cp2020</summary>
                 <ul>
                     <li>
                         <details>
-                            <summary><img src="Images/Blue.tif" alt=""> base</summary>
+                            <summary><img src="" class="folder" alt=""> base</summary>
                             <ul>
-                                <li><img src="Images/file.png" alt="">  Workshop</li>
-                                <li><img src="Images/file.png" alt="">  Workplace</li>
-                                <li><img src="Images/file.png" alt="">  WorkplaceId</li>
+                                <li><img src="" class="file" alt="">  Workshop</li>
+                                <li><img src="" class="file" alt="">  Workplace</li>
+                                <li><img src="" class="file" alt="">  WorkplaceId</li>
                             </ul>
                         </details>
                     </li>
                     <li>
                         <details>
-                            <summary><img src="Images/Blue.tif" alt=""> demo</summary>
+                            <summary><img src="" class="folder" alt=""> demo</summary>
                             <ul>
-                                <li><img src="Images/file.png" alt="">  ToysWorkshop</li>
+                                <li><img src="" class="file" alt="">  ToysWorkshop</li>
                             </ul>
                         </details>
                     </li>
                     <li>
                         <details>
-                            <summary><img src="Images/Blue.tif" alt=""> solution</summary>
+                            <summary><img src="" class="folder" alt=""> solution</summary>
                             <ul>
-                                <li><img src="Images/file.png" alt="">  Pair</li>
-                                <li><img src="Images/file.png" alt="">  WorkplaceHolder</li>
-                                <li><img src="Images/file.png" alt="">  Workshop</li>
-                                <li><img src="Images/file.png" alt="">  WorkshopFactory</li>
-                                <li><img src="Images/file.png" alt="">  test</li>
+                                <li><img src="" class="file" alt="">  Pair</li>
+                                <li><img src="" class="file" alt="">  WorkplaceHolder</li>
+                                <li><img src="" class="file" alt="">  Workshop</li>
+                                <li><img src="" class="file" alt="">  WorkshopFactory</li>
+                                <li><img src="" class="file" alt="">  test</li>
                             </ul>
                         </details>
                     </li>
                     <li>
-                        <img src="Images/file.png" alt="">  cp2020.iml
+                        <img src="" class="file" alt="">  cp2020.iml
                     </li>
                 </ul>
             </details></li>
@@ -61,45 +67,38 @@
     </div>
     <div class="code element">
         <div class="bar">
-        <button><img src="Images/file.png" alt="">  Pair.java</button>
+        <button><img src="" class="file" alt="">  Pair.java</button>
         </div>
-        <div class="content">
-        <code>
-            <pre>
-package cp2022.solution;
-
-public class Pair< T, W > {
-    private final T first;
-    private final W second;
-
-    public Pair(T t, W w) {
-        this.first = t;
-        this.second = w;
-    }
-
-    public T getFirst() {
-        return first;
-    }
-
-    public W getSecond() {
-        return second;
-    }
-}</pre>
-        </code>
-        </div>
+        <div id="code-container"></div>
     </div>
     <div class="fragment element">
-
+        <div id="fragment-container"></div>
     </div>
     <div class="tabs element">
-        <button class="tabs-button tab-button1">Tab1</button>
-        <button class="tabs-button tab-button2">Tab2</button>
-        <button class="tabs-button tab-button3">Tab3</button>
-        <button class="tabs-button tab-button4">Tab4</button>
+        <button>Processor</button>
+        <button>Processor options</button>
+        <button>Standard</button>
+        <button>Format</button>
     </div>
     <div class="options element">
-
+        <input type="radio" name="version" value="c++98" id="c++98">
+        <label for="c++98">C++ 98</label><br>
+        <input type="radio" name="version" value="c++11" id="c++11">
+        <label for="c++11">C++ 11</label><br>
+        <input type="radio" name="version" value="c++14" id="c++14">
+        <label for="c++14">C++ 14</label><br>
+        <input type="radio" name="version" value="c++17" id="c++17">
+        <label for="c++17">C++ 17</label><br>
+        <input type="radio" name="version" value="c++17" id="c++20">
+        <label for="c++20">C++ 20</label><br>
+        <input type="radio" name="version" value="c++17" id="c++23">
+        <label for="c++23">C++ 23</label><br>
     </div>
 </div>
+
+<script src="Scripts/ColorMode.js"></script>
+<script src="Scripts/Images.js"></script>
+<script src="Scripts/Files.js"></script>
+
 </body>
 </html>

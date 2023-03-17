@@ -1,0 +1,217 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu;
+    font-size: 1em;
+
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+
+.grid-container {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: [col1-start] 20% [col1-end col2-start] auto [col2-end col3-start] 15% [col3-end];
+    grid-template-rows: [row1-start] 30px [row1-end row2-end] auto [row2-end row3-start] 30px [row3-end row4-start] 20% [row4-end];
+    grid-template-areas:
+        "menu menu menu"
+        "files code fragment"
+        "files tabs tabs"
+        "files options options";
+    gap: 0;
+}
+
+i {
+    font-size: 1.4em;
+    text-align: center;
+
+    position: absolute;
+    right: 10px;
+
+    cursor: pointer;
+
+    height: 30px;
+    width: 30px;
+}
+
+.element {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+
+.bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+
+
+    height: 3vh;
+    width: 90%;
+}
+
+.bar-item {
+    text-align: center;
+
+    margin: 1%;
+    padding: 3px;
+    font-size: 1.7vh;
+}
+
+.bar button {
+    border: none;
+    position: relative;
+
+    margin: 0;
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+
+.content {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+
+    margin: 0 0 1vh 0;
+    padding: 1vh 0 1vh 1vh;
+    font-size: 1.5vh;
+
+    text-align: left;
+}
+
+.menu {
+    grid-area: menu;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.menu button {
+    border: none;
+
+    height: 100%;
+    width: 5%;
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+
+.menu button:hover {
+    width: 7%;
+}
+
+.menu button.dark-mode-toggle  {
+    position: absolute;
+    left: 95%;
+
+    height: 30px;
+    width: 30px;
+
+    text-align: center;
+}
+
+.menu button.dark-mode-toggle:hover {
+}
+
+.menu img.dark-mode-toggle {
+    height: 30px;
+    width: 30px;
+
+    text-align: left;
+}
+
+.files {
+    background: #3B4252;
+    grid-area: files;
+    display: block;
+}
+
+.code {
+    grid-area: code;
+    display: block;
+    overflow: auto;
+}
+
+.code pre {
+    font-size: 1.3em;
+}
+
+.code img {
+    position: relative;
+    top: 0.1em;
+    width: 1em;
+    height: 1em;
+}
+
+.fragment {
+    grid-area: fragment;
+
+    display: flex;
+    justify-content: center;
+    font-size: 0.5em;
+
+    padding: 10px 0 0 0;
+}
+
+.fragment pre {
+    font-size: 1.3em;
+}
+
+.tabs {
+    grid-area: tabs;
+    align-items: center;
+    padding: 0;
+
+    border-radius: 10px 0 0 10px;
+}
+
+.tabs button {
+    border: none;
+
+    height: 100%;
+    width: 15%;
+    border-radius: 10px;
+
+    font-size: 15px;
+
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+
+.tabs button:hover {
+    width: 18%;
+}
+
+.options {
+    background: #3B4252;
+    grid-area: options;
+    display: block;
+    padding: 10px;
+    font-size: 1em;
+}
+
+.line {
+    display: flex;
+    align-items: flex-start;
+    flex-grow: 1;
+}
+
+.line-number {
+    display: inline-block;
+    width: 3em;
+    text-align: right;
+    margin-right: 0.5em;
+    font-family: monospace;
+}

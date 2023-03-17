@@ -1,0 +1,91 @@
+:root {
+    --primary-color: #D8DEE9;
+    --secondary-color: #ECEFF4;
+    --trimary-color: #999;
+    --text-color: #0D1117;
+    --button-hover-color: rgba(138, 168, 197, 0.59);
+}
+
+.darkmode {
+    --primary-color: #0D1117;
+    --secondary-color: #161B22;
+    --text-color: #D8DEE9;
+    --button-hover-color: #4C566A;
+}
+
+body {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.element {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+.code button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.code button:hover {
+    background-color: var(--button-hover-color);
+}
+
+.menu {
+    background-color: var(--secondary-color);
+}
+
+.menu button {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+}
+
+.menu button:hover {
+    background-color: var(--button-hover-color);
+}
+
+.code {
+    background-color: var(--secondary-color);
+}
+
+.files {
+    border-right: 10px solid var(--secondary-color);
+}
+
+.fragment {
+    border-bottom: 10px solid var(--secondary-color);
+}
+
+.tabs button {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+}
+
+.tabs button:hover {
+    background-color: var(--button-hover-color);
+}
+
+.options {
+    border-top: 10px solid var(--secondary-color);
+}
+
+::-webkit-scrollbar {
+    background-color: var(--secondary-color);
+    border-radius: 5px;
+}
+
+/* Set the color and style of the scrollbar thumb */
+::-webkit-scrollbar-thumb {
+    background-color: var(--trimary-color);
+    border-radius: 5px;
+}
+
+/* Change the color of the scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--button-hover-color);
+}
+
+.line-number {
+    color: var(--trimary-color);
+}
