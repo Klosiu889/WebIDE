@@ -1,19 +1,22 @@
+:root {
+    --font: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu;
+}
+
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
-    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu;
-    font-size: 1em;
 
-    transition-duration: 0.2s;
-    transition-timing-function: ease-in-out;
+    height: 100%;
+
+    font-family: var(--font);
+    font-size: 1em;
 }
 
 .grid-container {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: [col1-start] 20% [col1-end col2-start] auto [col2-end col3-start] 15% [col3-end];
+    grid-template-columns: [col1-start] 17% [col1-end col2-start] auto [col2-end col3-start] 15% [col3-end];
     grid-template-rows: [row1-start] 30px [row1-end row2-end] auto [row2-end row3-start] 30px [row3-end row4-start] 20% [row4-end];
     grid-template-areas:
         "menu menu menu"
@@ -24,68 +27,17 @@ html, body {
 }
 
 i {
-    font-size: 1.4em;
-    text-align: center;
-
     position: absolute;
     right: 10px;
 
-    cursor: pointer;
+    text-align: center;
 
     height: 30px;
     width: 30px;
-}
 
-.element {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
+    font-size: 1.4em;
 
-    transition-duration: 0.2s;
-    transition-timing-function: ease-in-out;
-}
-
-.bar {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-
-
-    height: 3vh;
-    width: 90%;
-}
-
-.bar-item {
-    text-align: center;
-
-    margin: 1%;
-    padding: 3px;
-    font-size: 1.7vh;
-}
-
-.bar button {
-    border: none;
-    position: relative;
-
-    margin: 0;
-    border-radius: 10px;
-
-    font-size: 15px;
-
-    transition-duration: 0.2s;
-    transition-timing-function: ease-in-out;
-}
-
-.content {
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-
-    margin: 0 0 1vh 0;
-    padding: 1vh 0 1vh 1vh;
-    font-size: 1.5vh;
-
-    text-align: left;
+    cursor: pointer;
 }
 
 .menu {
@@ -100,19 +52,18 @@ i {
 
     height: 100%;
     width: 5%;
+    min-width: 70px;
     border-radius: 10px;
 
     font-size: 15px;
-
-    transition-duration: 0.2s;
-    transition-timing-function: ease-in-out;
+    text-align: center;
 }
 
 .menu button:hover {
     width: 7%;
 }
 
-.menu button.dark-mode-toggle  {
+.menu button.dark-mode-toggle {
     position: absolute;
     left: 95%;
 
@@ -120,9 +71,6 @@ i {
     width: 30px;
 
     text-align: center;
-}
-
-.menu button.dark-mode-toggle:hover {
 }
 
 .menu img.dark-mode-toggle {
@@ -133,9 +81,32 @@ i {
 }
 
 .files {
-    background: #3B4252;
     grid-area: files;
     display: block;
+}
+
+.files-bar {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+
+    height: 30px;
+    width: 100%;
+    padding: 10px;
+}
+
+.files-content {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    overflow: auto;
+
+    border-radius: 10px;
+    margin: 0 1vh 1vh 1vh;
+    padding: 0 0 1.7vh 0;
+    font-size: 1em;
+
+    text-align: left;
 }
 
 .code {
@@ -144,8 +115,24 @@ i {
     overflow: auto;
 }
 
-.code pre {
-    font-size: 1.3em;
+.code-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+
+
+    height: 30px;
+    width: 90%;
+}
+
+.code-bar button {
+    border: none;
+    position: relative;
+
+    margin: 0;
+    border-radius: 10px;
+
+    font-size: 15px;
 }
 
 .code img {
@@ -155,18 +142,53 @@ i {
     height: 1em;
 }
 
+.code-editor {
+    display: inline-flex;
+    gap: 10px;
+    border-radius: 2px;
+    font-size: 1em;
+    margin: 10px 0 10px 0;
+    width: 100%;
+}
+
+.code textarea {
+    font-size: 1em;
+    line-height: 1.5em;
+    font-family: var(--font);
+    overflow-y: hidden;
+    padding: 0 0 0 20px;
+    border: 0;
+    min-width: 500px;
+    outline: none;
+    resize: none;
+    width: 100%;
+}
+
+.code .line-numbers {
+    width: 20px;
+    line-height: 1.5em;
+
+    text-align: right;
+}
+
+.code .line-numbers span {
+    counter-increment: linenumber;
+    margin-bottom: 50px;
+}
+
+.code .line-numbers span::before {
+    content: counter(linenumber);
+    display: block;
+}
+
 .fragment {
     grid-area: fragment;
 
     display: flex;
-    justify-content: center;
+    overflow: auto;
     font-size: 0.5em;
 
-    padding: 10px 0 0 0;
-}
-
-.fragment pre {
-    font-size: 1.3em;
+    padding: 1vh;
 }
 
 .tabs {
@@ -177,41 +199,43 @@ i {
     border-radius: 10px 0 0 10px;
 }
 
-.tabs button {
+.tabs-button {
     border: none;
 
     height: 100%;
     width: 15%;
+    min-width: 80px;
     border-radius: 10px;
 
     font-size: 15px;
-
-    transition-duration: 0.2s;
-    transition-timing-function: ease-in-out;
+    text-align: center;
 }
 
-.tabs button:hover {
+.tabs-button:hover, .tabs-button.active {
     width: 18%;
 }
 
 .options {
     background: #3B4252;
     grid-area: options;
-    display: block;
-    padding: 10px;
-    font-size: 1em;
-}
-
-.line {
     display: flex;
-    align-items: flex-start;
-    flex-grow: 1;
+    flex-flow: column;
+    align-content: flex-start;
+    flex-wrap: wrap;
+    padding: 10px;
 }
 
-.line-number {
-    display: inline-block;
-    width: 3em;
-    text-align: right;
-    margin-right: 0.5em;
-    font-family: monospace;
+.options-item {
+    margin: 5px;
+}
+
+::-webkit-scrollbar-track-piece {
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
 }

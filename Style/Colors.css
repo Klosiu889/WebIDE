@@ -13,23 +13,12 @@
     --button-hover-color: #4C566A;
 }
 
+* {
+    color: var(--text-color);
+}
+
 body {
     background-color: var(--secondary-color);
-    color: var(--text-color);
-}
-
-.element {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-}
-
-.code button {
-    background-color: var(--secondary-color);
-    color: var(--text-color);
-}
-
-.code button:hover {
-    background-color: var(--button-hover-color);
 }
 
 .menu {
@@ -38,7 +27,6 @@ body {
 
 .menu button {
     background-color: var(--secondary-color);
-    color: var(--text-color);
 }
 
 .menu button:hover {
@@ -49,43 +37,66 @@ body {
     background-color: var(--secondary-color);
 }
 
+.code button {
+    background-color: var(--secondary-color);
+}
+
+.code button:hover {
+    background-color: var(--button-hover-color);
+}
+
+.code-editor {
+    background-color: var(--secondary-color);
+}
+
+.code textarea {
+    background-color: var(--secondary-color);
+    
+}
+
 .files {
+    background-color: var(--primary-color);
     border-right: 10px solid var(--secondary-color);
 }
 
+.files-content {
+    background-color: var(--secondary-color);
+}
+
 .fragment {
+    background-color: var(--primary-color);
     border-bottom: 10px solid var(--secondary-color);
 }
 
-.tabs button {
+.tabs {
     background-color: var(--primary-color);
-    color: var(--text-color);
 }
 
-.tabs button:hover {
+.tabs-button {
+    background-color: var(--primary-color);
+}
+
+.tabs-button:hover, .tabs-button.active {
     background-color: var(--button-hover-color);
 }
 
 .options {
+    background-color: var(--primary-color);
     border-top: 10px solid var(--secondary-color);
 }
 
 ::-webkit-scrollbar {
     background-color: var(--secondary-color);
-    border-radius: 5px;
 }
 
-/* Set the color and style of the scrollbar thumb */
 ::-webkit-scrollbar-thumb {
     background-color: var(--trimary-color);
-    border-radius: 5px;
 }
 
-/* Change the color of the scrollbar thumb on hover */
 ::-webkit-scrollbar-thumb:hover {
     background-color: var(--button-hover-color);
 }
 
-.line-number {
-    color: var(--trimary-color);
+::-webkit-scrollbar-corner {
+    background-color: var(--secondary-color);
 }

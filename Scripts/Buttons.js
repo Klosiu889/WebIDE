@@ -29,3 +29,11 @@ darkModeToggle.addEventListener('click', () => {
     if (darkMode !== 'enabled') enableDarkMode();
     else disableDarkMode();
 });
+
+const tabsButtons = document.querySelectorAll('.tabs-button');
+
+tabsButtons.forEach(tabButton =>
+    tabButton.addEventListener("click", () => {
+        tabsButtons.forEach(tabButton => tabButton.classList.remove("active"));
+        tabButton.classList.toggle("active");
+}));

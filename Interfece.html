@@ -11,93 +11,96 @@
 </head>
 <body>
 <div class="grid-container">
-    <div class="menu element">
+    <div class="menu">
         <button>File</button>
         <button>Edit</button>
         <button>Options</button>
         <button>View</button>
         <i id="dark-mode-toggle" class="bi bi-brightness-high-fill"></i>
     </div>
-    <div class="files element">
-        <div class="bar">
-            <div class="bar-item">Project</div>
-        </div>
-        <div class="content tree">
+    <div class="files">
+        <div class="files-bar">Project</div>
+        <div class="files-content tree">
         <ul>
             <li><details>
-                <summary><img src="" class="folder" alt="">   cp2020</summary>
+                <summary><img src="Images/mac-folder.png" class="folder" alt="">   cp2020</summary>
                 <ul>
                     <li>
                         <details>
-                            <summary><img src="" class="folder" alt=""> base</summary>
+                            <summary><img src="Images/mac-folder.png" class="folder" alt=""> base</summary>
                             <ul>
-                                <li><img src="" class="file" alt="">  Workshop</li>
-                                <li><img src="" class="file" alt="">  Workplace</li>
-                                <li><img src="" class="file" alt="">  WorkplaceId</li>
+                                <li><img src="Images/mac-file.png" class="file" alt="">  Workshop</li>
+                                <li><img src="Images/mac-file.png" class="file" alt="">  Workplace</li>
+                                <li><img src="Images/mac-file.png" class="file" alt="">  WorkplaceId</li>
                             </ul>
                         </details>
                     </li>
                     <li>
                         <details>
-                            <summary><img src="" class="folder" alt=""> demo</summary>
+                            <summary><img src="Images/mac-folder.png" class="folder" alt=""> demo</summary>
                             <ul>
-                                <li><img src="" class="file" alt="">  ToysWorkshop</li>
+                                <li><img src="Images/mac-file.png" class="file" alt="">  ToysWorkshop</li>
                             </ul>
                         </details>
                     </li>
                     <li>
                         <details>
-                            <summary><img src="" class="folder" alt=""> solution</summary>
+                            <summary><img src="Images/mac-folder.png" class="folder" alt=""> solution</summary>
                             <ul>
-                                <li><img src="" class="file" alt="">  Pair</li>
-                                <li><img src="" class="file" alt="">  WorkplaceHolder</li>
-                                <li><img src="" class="file" alt="">  Workshop</li>
-                                <li><img src="" class="file" alt="">  WorkshopFactory</li>
-                                <li><img src="" class="file" alt="">  test</li>
+                                <li><img src="Images/mac-file.png" class="file" alt="">  Pair</li>
+                                <li><img src="Images/mac-file.png" class="file" alt="">  WorkplaceHolder</li>
+                                <li><img src="Images/mac-file.png" class="file" alt="">  Workshop</li>
+                                <li><img src="Images/mac-file.png" class="file" alt="">  WorkshopFactory</li>
+                                <li><img src="Images/mac-file.png" class="file" alt="">  test</li>
                             </ul>
                         </details>
                     </li>
                     <li>
-                        <img src="" class="file" alt="">  cp2020.iml
+                        <img src="Images/mac-file.png" class="file" alt="">  cp2020.iml
                     </li>
                 </ul>
             </details></li>
         </ul>
         </div>
     </div>
-    <div class="code element">
-        <div class="bar">
-        <button><img src="" class="file" alt="">  Pair.java</button>
+    <div class="code">
+        <div class="code-bar">
+        <button><img src="Images/mac-file.png" class="file" alt="">  TroysWorkshop.java</button>
         </div>
-        <div id="code-container"></div>
+        <div class="code-editor">
+            <div class="line-numbers">
+                <span></span>
+            </div>
+            <label for="code-textarea"></label><textarea id="code-textarea"></textarea>
+        </div>
     </div>
-    <div class="fragment element">
+    <div class="fragment">
         <div id="fragment-container"></div>
     </div>
-    <div class="tabs element">
-        <button>Processor</button>
-        <button>Processor options</button>
-        <button>Standard</button>
-        <button>Format</button>
+    <div class="tabs">
+        <button class="tabs-button">Processor</button>
+        <button class="tabs-button">Options</button>
+        <button class="tabs-button">Standard</button>
+        <button class="tabs-button">Format</button>
     </div>
-    <div class="options element">
-        <input type="radio" name="version" value="c++98" id="c++98">
-        <label for="c++98">C++ 98</label><br>
-        <input type="radio" name="version" value="c++11" id="c++11">
-        <label for="c++11">C++ 11</label><br>
-        <input type="radio" name="version" value="c++14" id="c++14">
-        <label for="c++14">C++ 14</label><br>
-        <input type="radio" name="version" value="c++17" id="c++17">
-        <label for="c++17">C++ 17</label><br>
-        <input type="radio" name="version" value="c++17" id="c++20">
-        <label for="c++20">C++ 20</label><br>
-        <input type="radio" name="version" value="c++17" id="c++23">
-        <label for="c++23">C++ 23</label><br>
+    <div class="options">
+        <div class="options-item"><input type="radio" name="version" value="c++98" id="c++98">
+        <label for="c++98">C++ 98</label></div>
+        <div class="options-item"><input type="radio" name="version" value="c++11" id="c++11">
+        <label for="c++11">C++ 11</label></div>
+        <div class="options-item"><input type="radio" name="version" value="c++14" id="c++14">
+        <label for="c++14">C++ 14</label></div>
+        <div class="options-item"><input type="radio" name="version" value="c++17" id="c++17">
+        <label for="c++17">C++ 17</label></div>
+        <div class="options-item"><input type="radio" name="version" value="c++17" id="c++20">
+        <label for="c++20">C++ 20</label></div>
+        <div class="options-item"><input type="radio" name="version" value="c++17" id="c++23">
+        <label for="c++23">C++ 23</label></div>
     </div>
 </div>
 
-<script src="Scripts/ColorMode.js"></script>
-<script src="Scripts/Images.js"></script>
+<script src="Scripts/Buttons.js"></script>
+<script src="Scripts/CodeContainer.js"></script>
 <script src="Scripts/Files.js"></script>
 
 </body>

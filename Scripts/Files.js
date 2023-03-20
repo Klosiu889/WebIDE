@@ -16,8 +16,6 @@ function loadTextFile(fileName, textContainer) {
         });
 }
 
-const codeContainer = document.getElementById("code-container");
 const fragmentContainer = document.getElementById("fragment-container");
 
-loadTextFile("Files/TroysWorkshop.txt", codeContainer);
 loadTextFile("Files/TroysWorkshopFragment.txt", fragmentContainer);
