@@ -21,11 +21,10 @@ jobs:
       uses: actions/setup-python@v3
       with:
         python-version: ${{ matrix.python-version }}
-        cache: pip3
     - name: Install Dependencies
       run: |
-        python3 -m pip3 install --upgrade pip3
-        pip3 install -r requirements.txt
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
     - name: Run Tests
       run: |
-        python3 Backend/manage.py test
+        python Backend/manage.py test
