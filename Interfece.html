@@ -78,30 +78,41 @@
         <div id="fragment-container"></div>
     </div>
     <div class="tabs">
-        <button class="tabs-button">Processor</button>
-        <button class="tabs-button">Options</button>
-        <button class="tabs-button">Standard</button>
-        <button class="tabs-button">Format</button>
+        <button class="tabs-button tablinks" onclick="openTab(event, 'standard')">STANDARD</button>
+        <button class="tabs-button tablinks" onclick="openTab(event, 'optymalizacje')">OPTYMALIZACJE</button>
+        <button class="tabs-button">PROCESOR</button>
+        <button class="tabs-button">ZALEŻNE</button>
     </div>
-    <div class="options">
+
+    <div id="standard" class="options">
         <div class="options-item"><input type="radio" name="version" value="c++98" id="c++98">
-        <label for="c++98">C++ 98</label></div>
+            <label for="c++98">C++ 98</label></div>
         <div class="options-item"><input type="radio" name="version" value="c++11" id="c++11">
-        <label for="c++11">C++ 11</label></div>
+            <label for="c++11">C++ 11</label></div>
         <div class="options-item"><input type="radio" name="version" value="c++14" id="c++14">
-        <label for="c++14">C++ 14</label></div>
+            <label for="c++14">C++ 14</label></div>
         <div class="options-item"><input type="radio" name="version" value="c++17" id="c++17">
-        <label for="c++17">C++ 17</label></div>
+            <label for="c++17">C++ 17</label></div>
         <div class="options-item"><input type="radio" name="version" value="c++17" id="c++20">
-        <label for="c++20">C++ 20</label></div>
+            <label for="c++20">C++ 20</label></div>
         <div class="options-item"><input type="radio" name="version" value="c++17" id="c++23">
-        <label for="c++23">C++ 23</label></div>
+            <label for="c++23">C++ 23</label></div>
+    </div>
+
+    <div id="optymalizacje" class="options">
+        <div class="options-item"><input type="checkbox" name="version" value="c++98" id="o2">
+            <label for="o2">O2</label></div>
+        <div class="options-item"><input type="checkbox" name="version" value="c++11" id="o3">
+            <label for="o3">O3</label></div>
+        <div class="options-item"><input type="checkbox" name="version" value="c++14" id="o7">
+            <label for="o7">O7</label></div>
     </div>
 </div>
 
 <script src="Scripts/Buttons.js"></script>
 <script src="Scripts/CodeContainer.js"></script>
 <script src="Scripts/Files.js"></script>
+<script src="Scripts/OpenTab.js"></script>
 
 </body>
 </html>
