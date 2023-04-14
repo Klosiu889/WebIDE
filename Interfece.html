@@ -78,10 +78,10 @@
         <div id="fragment-container"></div>
     </div>
     <div class="tabs">
-        <button class="tabs-button tablinks" onclick="openTab(event, 'standard')">STANDARD</button>
-        <button class="tabs-button tablinks" onclick="openTab(event, 'optymalizacje')">OPTYMALIZACJE</button>
-        <button class="tabs-button">PROCESOR</button>
-        <button class="tabs-button">ZALEŻNE</button>
+        <button id="standard-button" class="tabs-button" onclick="openTab(event, 'standard')">Standard</button>
+        <button id="optimisation-button" class="tabs-button" onclick="openTab(event, 'optimisation')">Optimisations</button>
+        <button id="processor-button" class="tabs-button" onclick="openTab(event, 'processor')">Processor</button>
+        <button id="dependent-button" class="tabs-button" onclick="openTab(event, 'dependent')">Dependent</button>
     </div>
 
     <div id="standard" class="options">
@@ -99,7 +99,7 @@
             <label for="c++23">C++ 23</label></div>
     </div>
 
-    <div id="optymalizacje" class="options">
+    <div id="optimisation" class="options">
         <div class="options-item"><input type="checkbox" name="version" value="c++98" id="o2">
             <label for="o2">O2</label></div>
         <div class="options-item"><input type="checkbox" name="version" value="c++11" id="o3">
@@ -107,6 +107,31 @@
         <div class="options-item"><input type="checkbox" name="version" value="c++14" id="o7">
             <label for="o7">O7</label></div>
     </div>
+
+    <div id="processor" class="options">
+        <div class="options-item"><input type="radio" name="version" value="MCS51" id="mcs51" class="processor-radio">
+            <label for="mcs51">MCS51</label></div>
+        <div class="options-item"><input type="radio" name="version" value="Z80" id="z80" class="processor-radio">
+            <label for="z80">Z80</label></div>
+        <div class="options-item"><input type="radio" name="version" value="STM8" id="stm8" class="processor-radio">
+            <label for="stm8">STM8</label></div>
+    </div>
+
+    <div id="dependent" class="options">
+    </div>
+
+    <div id="dependent-mcs51" class="options">
+        MCS51
+    </div>
+
+    <div id="dependent-z80" class="options">
+        Z80
+    </div>
+
+    <div id="dependent-stm8" class="options">
+        STM8
+    </div>
+
 </div>
 
 <script src="Scripts/Buttons.js"></script>
