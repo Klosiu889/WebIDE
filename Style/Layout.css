@@ -12,7 +12,7 @@ html, body {
     font-size: 1em;
 }
 
-.grid-container {
+.grid-container-desktop {
     height: 100%;
     width: 100%;
     display: grid;
@@ -26,23 +26,21 @@ html, body {
     gap: 0;
 }
 
-@media screen and (max-width: 800px) {
-    .grid-container {
-        height: 100%;
-        width: 100%;
-        display: grid;
-        grid-template-columns: [col1-start] 100% [col1-end];
-        grid-template-rows: [row1-start] 30px [row1-end row2-end] 10% [row2-end row3-start] auto
+.grid-container-mobile {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: [col1-start] 100% [col1-end];
+    grid-template-rows: [row1-start] 30px [row1-end row2-end] 10% [row2-end row3-start] auto
                             [row3-end row4-start] 10% [row4-end row5-start] 30px [row5-end row6-start] 20% [row6-end];
-        grid-template-areas:
+    grid-template-areas:
             "menu"
             "files"
             "code"
             "fragment"
             "tabs"
             "options";
-        gap: 0;
-    }
+    gap: 0;
 }
 
 i {
