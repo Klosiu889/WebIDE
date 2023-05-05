@@ -1,0 +1,42 @@
+.tree img {
+    position: relative;
+    top: 0.5em;
+    height: 2em;
+    width: 2em;
+}
+
+.tree ul {
+    list-style: none;
+    font-size: 1em;
+    margin: 0 0 0 0;
+    padding: 0 0 0 2em;
+}
+
+.tree ul li {
+    position: relative;
+}
+
+.tree summary {
+    cursor: pointer;
+}
+
+.tree details > summary {
+    list-style: none;
+}
+.tree details > summary::-webkit-details-marker {
+    display:none;
+}
+
+.tree summary::before {
+    content: '\25B6';
+    position: absolute;
+    top: 1em;
+    left: -1em;
+    font-size: 1em;
+    height: 1em;
+    width: 1em;
+}
+
+.tree details[open] > summary::before {
+    content: '\25BC';
+}

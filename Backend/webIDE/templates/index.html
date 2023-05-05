@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="Style/Layout.css">
-    <link rel="stylesheet" href="Style/FileTree.css">
-    <link rel="stylesheet" href="Style/Colors.css">
+    <link rel="stylesheet" href="{% static 'webIDE/Style/Layout.css' %}">
+    <link rel="stylesheet" href="{% static 'webIDE/Style/FileTree.css' %}">
+    <link rel="stylesheet" href="{% static 'webIDE/Style/Colors.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" />
 
     <title>Integrated Development Environment</title>
@@ -23,40 +24,40 @@
         <div class="files-content tree">
         <ul>
             <li><details>
-                <summary><img src="Images/mac-folder.png" class="folder" alt="">   cp2020</summary>
+                <summary><img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt="">   cp2020</summary>
                 <ul>
                     <li>
                         <details>
-                            <summary><img src="Images/mac-folder.png" class="folder" alt=""> base</summary>
+                            <summary><img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt=""> base</summary>
                             <ul>
-                                <li><img src="Images/mac-file.png" class="file" alt="">  Workshop</li>
-                                <li><img src="Images/mac-file.png" class="file" alt="">  Workplace</li>
-                                <li><img src="Images/mac-file.png" class="file" alt="">  WorkplaceId</li>
+                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  Workshop</li>
+                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  Workplace</li>
+                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  WorkplaceId</li>
                             </ul>
                         </details>
                     </li>
                     <li>
                         <details>
-                            <summary><img src="Images/mac-folder.png" class="folder" alt=""> demo</summary>
+                            <summary><img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt=""> demo</summary>
                             <ul>
-                                <li><img src="Images/mac-file.png" class="file" alt="">  ToysWorkshop</li>
+                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  ToysWorkshop</li>
                             </ul>
                         </details>
                     </li>
                     <li>
                         <details>
-                            <summary><img src="Images/mac-folder.png" class="folder" alt=""> solution</summary>
+                            <summary><img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt=""> solution</summary>
                             <ul>
-                                <li><img src="Images/mac-file.png" class="file" alt="">  Pair</li>
-                                <li><img src="Images/mac-file.png" class="file" alt="">  WorkplaceHolder</li>
-                                <li><img src="Images/mac-file.png" class="file" alt="">  Workshop</li>
-                                <li><img src="Images/mac-file.png" class="file" alt="">  WorkshopFactory</li>
-                                <li><img src="Images/mac-file.png" class="file" alt="">  test</li>
+                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  Pair</li>
+                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  WorkplaceHolder</li>
+                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  Workshop</li>
+                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  WorkshopFactory</li>
+                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  test</li>
                             </ul>
                         </details>
                     </li>
                     <li>
-                        <img src="Images/mac-file.png" class="file" alt="">  cp2020.iml
+                        <img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  cp2020.iml
                     </li>
                 </ul>
             </details></li>
@@ -65,7 +66,7 @@
     </div>
     <div class="code">
         <div class="code-bar">
-        <button><img src="Images/mac-file.png" class="file" alt="">  TroysWorkshop.java</button>
+        <button><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  TroysWorkshop.java</button>
         </div>
         <div class="code-editor">
             <div class="line-numbers">
@@ -134,11 +135,9 @@
 
 </div>
 
-<script src="Scripts/Buttons.js"></script>
-<script src="Scripts/CodeContainer.js"></script>
-<script src="Scripts/Files.js"></script>
-<script src="Scripts/OpenTab.js"></script>
-<script src="Scripts/Mobile.js"></script>
+<script src="{% static 'webIDE/Scripts/Buttons.js' %}"></script>
+<script src="{% static 'webIDE/Scripts/OpenTab.js' %}"></script>
+<script src="{% static 'webIDE/Scripts/Mobile.js' %}"></script>
 
 </body>
 </html>
