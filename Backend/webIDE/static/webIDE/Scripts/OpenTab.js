@@ -11,16 +11,16 @@ function changeDependant(evt) {
 
     switch (processorOptionID) {
         case "mcs51":
-            dependentTab.onclick = function() {openTab(event, 'dependent-mcs51')};
+            dependentTab.addEventListener("click",  (evt) => openTab(evt, 'dependent-mcs51'));
             break;
         case "z80":
-            dependentTab.onclick = function() {openTab(event, 'dependent-z80')};
+            dependentTab.addEventListener("click",  (evt) => openTab(evt, 'dependent-z80'));
             break;
         case "stm8":
-            dependentTab.onclick = function() {openTab(event, 'dependent-stm8')};
+            dependentTab.addEventListener("click",  (evt) => openTab(evt, 'dependent-stm8'));
             break;
         default:
-            dependentTab.onclick = function() {openTab(event, 'dependent')};
+            dependentTab.addEventListener("click",  (evt) => openTab(evt, 'dependent'));
     }
 }
 
@@ -33,6 +33,7 @@ function hideTabs() {
 function openTab(evt, tabName) {
     hideTabs();
     document.getElementById(tabName).style.display = "block";
+    console.log(tabName);
 }
 
-openTab(event, 'standard');
+openTab(null, 'standard');

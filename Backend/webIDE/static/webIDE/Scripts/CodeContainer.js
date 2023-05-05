@@ -6,13 +6,6 @@ const updateLineNumbers = () => {
     lineNumbers.innerHTML = Array(numberOfLines).fill('<span></span>').join('');
 };
 
-fetch("{% static 'webIDE/Files/TroysWorkshop.txt' %}")
-    .then(response => response.text())
-    .then(text => {
-        textarea.value = text
-        updateLineNumbers();
-    });
-
 textarea.addEventListener('keyup', () => {
     updateLineNumbers();
 })

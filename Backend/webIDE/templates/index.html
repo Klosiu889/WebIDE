@@ -79,10 +79,10 @@
         <div id="fragment-container"></div>
     </div>
     <div class="tabs">
-        <button id="standard-button" class="tabs-button" onclick="openTab(event, 'standard')">Standard</button>
-        <button id="optimisation-button" class="tabs-button" onclick="openTab(event, 'optimisation')">Optimisations</button>
-        <button id="processor-button" class="tabs-button" onclick="openTab(event, 'processor')">Processor</button>
-        <button id="dependent-button" class="tabs-button" onclick="openTab(event, 'dependent')">Dependent</button>
+        <button id="standard-button" class="tabs-button" onclick="openTab(null, 'standard')">Standard</button>
+        <button id="optimisation-button" class="tabs-button" onclick="openTab(null, 'optimisation')">Optimisations</button>
+        <button id="processor-button" class="tabs-button" onclick="openTab(null, 'processor')">Processor</button>
+        <button id="dependent-button" class="tabs-button" onclick="openTab(null, 'dependent')">Dependent</button>
     </div>
 
     <div id="standard" class="options">
@@ -138,6 +138,7 @@
 <script src="{% static 'webIDE/Scripts/Buttons.js' %}"></script>
 <script src="{% static 'webIDE/Scripts/OpenTab.js' %}"></script>
 <script src="{% static 'webIDE/Scripts/Mobile.js' %}"></script>
+<script src="{% static 'webIDE/Scripts/CodeContainer.js' %}"></script>
 
 </body>
 </html>
