@@ -1,0 +1,27 @@
+{% load static %}
+{% for dir in directories %}
+    {% if dir.parent == parent_id and dir.availability%}
+        <li><details>
+            <summary>
+                <img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt="">
+                <span> {{ dir.name }} </span>
+                <label>
+                    <input type="checkbox">
+                </label>
+            </summary>
+            <ul>
+                {% include 'file_tree.html' with parent_id=dir %}
+            </ul>
+        </details></li>
+    {% endif %}
+{% endfor %}
+{% for file in files %}
+    {% if file.parent == parent_id and file.availability %}
+        <li>
+            <img src="{% static 'webIDE/Images/mac-file.png' %}" class="folder" alt=""> {{ file.name }}
+            <label>
+                <input type="checkbox">
+            </label>
+        </li>
+    {% endif %}
+{% endfor %}

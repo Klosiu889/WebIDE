@@ -33,7 +33,6 @@ function hideTabs() {
 function openTab(evt, tabName) {
     hideTabs();
     document.getElementById(tabName).style.display = "block";
-    console.log(tabName);
 }
 
 openTab(null, 'standard');

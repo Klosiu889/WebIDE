@@ -1,6 +1,12 @@
-from django.http import HttpResponse
 from django.shortcuts import render
+from .models import Directory, File
 
 
 def index(request):
-    return render(request, 'index.html')
+    directories = Directory.objects.all()
+    files = File.objects.all()
+    data = {
+        'directories': directories,
+        'files': files,
+    }
+    return render(request, 'index.html', data)

@@ -13,54 +13,24 @@
 <body>
 <div id="grid-container">
     <div class="menu">
-        <button>File</button>
-        <button>Edit</button>
-        <button>Options</button>
-        <button>View</button>
+        <ol>
+            <li><a href="#">File</a>
+                <ul>
+                    <li><a href="#">Add file</a></li>
+                    <li><a href="#">Add directory</a></li>
+                    <li><a href="#">Remove</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Edit</a></li>
+            <li><a href="#">View</a></li>
+        </ol>
         <i id="dark-mode-toggle" class="bi bi-brightness-high-fill"></i>
     </div>
     <div class="files">
         <div class="files-bar">Project</div>
         <div class="files-content tree">
         <ul>
-            <li><details>
-                <summary><img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt="">   cp2020</summary>
-                <ul>
-                    <li>
-                        <details>
-                            <summary><img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt=""> base</summary>
-                            <ul>
-                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  Workshop</li>
-                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  Workplace</li>
-                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  WorkplaceId</li>
-                            </ul>
-                        </details>
-                    </li>
-                    <li>
-                        <details>
-                            <summary><img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt=""> demo</summary>
-                            <ul>
-                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  ToysWorkshop</li>
-                            </ul>
-                        </details>
-                    </li>
-                    <li>
-                        <details>
-                            <summary><img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt=""> solution</summary>
-                            <ul>
-                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  Pair</li>
-                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  WorkplaceHolder</li>
-                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  Workshop</li>
-                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  WorkshopFactory</li>
-                                <li><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  test</li>
-                            </ul>
-                        </details>
-                    </li>
-                    <li>
-                        <img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  cp2020.iml
-                    </li>
-                </ul>
-            </details></li>
+            {% include 'file_tree.html' with parent_id=None %}
         </ul>
         </div>
     </div>
@@ -137,7 +107,6 @@
 
 <script src="{% static 'webIDE/Scripts/Buttons.js' %}"></script>
 <script src="{% static 'webIDE/Scripts/OpenTab.js' %}"></script>
-<script src="{% static 'webIDE/Scripts/Mobile.js' %}"></script>
 <script src="{% static 'webIDE/Scripts/CodeContainer.js' %}"></script>
 
 </body>

@@ -3,7 +3,7 @@
     --secondary-color: #ECEFF4;
     --trimary-color: #999;
     --text-color: #0D1117;
-    --button-hover-color: rgba(138, 168, 197, 0.59);
+    --button-hover-color: rgba(138, 168, 197);
 }
 
 .darkmode {
@@ -27,11 +27,24 @@ body {
     background-color: var(--secondary-color);
 }
 
-.menu button {
+.menu ol > li {
     background-color: var(--secondary-color);
+    color: var(--text-color);
 }
 
-.menu button:hover {
+.menu ol > li:hover {
+    background-color: var(--button-hover-color);
+}
+
+.menu ol > li > ul > li {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border-bottom: 1px solid var(--text-color);
+    border-left: 1px solid var(--text-color);
+    border-right: 1px solid var(--text-color);
+}
+
+.menu ol > li > ul > li:hover {
     background-color: var(--button-hover-color);
 }
 

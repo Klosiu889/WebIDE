@@ -12,7 +12,7 @@ html, body {
     font-size: 1em;
 }
 
-.grid-container-desktop {
+#grid-container {
     height: 100%;
     width: 100%;
     display: grid;
@@ -26,21 +26,23 @@ html, body {
     gap: 0;
 }
 
-.grid-container-mobile {
-    height: 100%;
-    width: 100%;
-    display: grid;
-    grid-template-columns: [col1-start] 100% [col1-end];
-    grid-template-rows: [row1-start] 30px [row1-end row2-end] auto [row2-end row3-start] auto
+@media(max-width: 660px){
+    #grid-container {
+        height: 100%;
+        width: 100%;
+        display: grid;
+        grid-template-columns: [col1-start] 100% [col1-end];
+        grid-template-rows: [row1-start] 30px [row1-end row2-end] auto [row2-end row3-start] auto
                             [row3-end row4-start] 10% [row4-end row5-start] 30px [row5-end row6-start] 20% [row6-end];
-    grid-template-areas:
+        grid-template-areas:
             "menu"
             "files"
             "code"
             "fragment"
             "tabs"
             "options";
-    gap: 0;
+        gap: 0;
+    }
 }
 
 i {
@@ -59,25 +61,57 @@ i {
 
 .menu {
     grid-area: menu;
-    align-items: center;
+    text-align: left;
     padding: 0;
     margin: 0;
 }
 
-.menu button {
-    border: none;
-
+.menu ol {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
     height: 100%;
-    width: 5%;
-    min-width: 70px;
-    border-radius: 10px;
-
-    font-size: 15px;
+    line-height: 30px;
+    display: inline-block;
     text-align: center;
 }
 
-.menu button:hover {
-    width: 7%;
+.menu ol a {
+    text-decoration: none;
+    display: block;
+}
+
+.menu ol > li {
+    float: left;
+    width: 100px;
+    height: 100%;
+}
+
+.menu ol > li:hover {
+    width: 151px;
+}
+
+.menu ol > li > ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    display: none;
+}
+
+.menu ol > li:hover > ul {
+    display: block;
+}
+
+.menu ol > li > ul > li {
+    float: left;
+    position: relative;
+    z-index: 100;
+    width: 150px;
+}
+
+.menu ol > li > ul > li:last-child {
+    border-radius: 0 0 10px 10px;
 }
 
 .menu button.dark-mode-toggle {
