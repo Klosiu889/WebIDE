@@ -31,6 +31,7 @@ class Directory(Item):
 
 class File(Item):
     parent = models.ForeignKey(Directory, on_delete=models.CASCADE, blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
 
     class Meta:
         constraints = [

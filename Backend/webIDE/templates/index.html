@@ -16,13 +16,13 @@
         <ol>
             <li><a href="#">File</a>
                 <ul>
-                    <li><a href="#">Add file</a></li>
-                    <li><a href="#">Add directory</a></li>
-                    <li><a href="#">Remove</a></li>
+                    <li id="add-file-button"><a href="#">Add file</a></li>
+                    <li id="add-dir-button"><a href="#">Add directory</a></li>
+                    <li id="save-button"><a href="#">Save</a></li>
+                    <li id="delete-button"><a href="#">Delete</a></li>
                 </ul>
             </li>
-            <li><a href="#">Edit</a></li>
-            <li><a href="#">View</a></li>
+            <li><a href="#">Compile</a></li>
         </ol>
         <i id="dark-mode-toggle" class="bi bi-brightness-high-fill"></i>
     </div>
@@ -36,7 +36,9 @@
     </div>
     <div class="code">
         <div class="code-bar">
-        <button><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">  TroysWorkshop.java</button>
+        <button><img src="{% static 'webIDE/Images/mac-file.png' %}" class="file" alt="">
+        <span id="file-name-display"></span>
+        </button>
         </div>
         <div class="code-editor">
             <div class="line-numbers">
@@ -56,26 +58,20 @@
     </div>
 
     <div id="standard" class="options">
-        <div class="options-item"><input type="radio" name="version" value="c++98" id="c++98">
-            <label for="c++98">C++ 98</label></div>
-        <div class="options-item"><input type="radio" name="version" value="c++11" id="c++11">
-            <label for="c++11">C++ 11</label></div>
-        <div class="options-item"><input type="radio" name="version" value="c++14" id="c++14">
-            <label for="c++14">C++ 14</label></div>
-        <div class="options-item"><input type="radio" name="version" value="c++17" id="c++17">
-            <label for="c++17">C++ 17</label></div>
-        <div class="options-item"><input type="radio" name="version" value="c++17" id="c++20">
-            <label for="c++20">C++ 20</label></div>
-        <div class="options-item"><input type="radio" name="version" value="c++17" id="c++23">
-            <label for="c++23">C++ 23</label></div>
+        <div class="options-item"><input type="radio" name="version" value="c89" id="c89">
+            <label for="c89">C89</label></div>
+        <div class="options-item"><input type="radio" name="version" value="c99" id="c99">
+            <label for="c99">C99</label></div>
+        <div class="options-item"><input type="radio" name="version" value="c11" id="c11">
+            <label for="c11">C11</label></div>
     </div>
 
     <div id="optimisation" class="options">
-        <div class="options-item"><input type="checkbox" name="version" value="c++98" id="o2">
+        <div class="options-item"><input type="checkbox" name="version" value="o2" id="o2">
             <label for="o2">O2</label></div>
-        <div class="options-item"><input type="checkbox" name="version" value="c++11" id="o3">
+        <div class="options-item"><input type="checkbox" name="version" value="o3" id="o3">
             <label for="o3">O3</label></div>
-        <div class="options-item"><input type="checkbox" name="version" value="c++14" id="o7">
+        <div class="options-item"><input type="checkbox" name="version" value="o7" id="o7">
             <label for="o7">O7</label></div>
     </div>
 
@@ -105,9 +101,11 @@
 
 </div>
 
+{{ directories_list|json_script:"directories" }}
+{{ files_list|json_script:"files" }}
 <script src="{% static 'webIDE/Scripts/Buttons.js' %}"></script>
 <script src="{% static 'webIDE/Scripts/OpenTab.js' %}"></script>
-<script src="{% static 'webIDE/Scripts/CodeContainer.js' %}"></script>
+<script src="{% static 'webIDE/Scripts/FilesServices.js' %}"></script>
 
 </body>
 </html>

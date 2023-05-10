@@ -78,6 +78,10 @@ body {
     background-color: var(--secondary-color);
 }
 
+.opened {
+    color: var(--trimary-color);
+}
+
 .fragment {
     background-color: var(--primary-color);
     border-bottom: 10px solid var(--secondary-color);

@@ -2,12 +2,8 @@
 {% for dir in directories %}
     {% if dir.parent == parent_id and dir.availability%}
         <li><details>
-            <summary>
-                <img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt="">
-                <span> {{ dir.name }} </span>
-                <label>
-                    <input type="checkbox">
-                </label>
+            <summary class="clickable-directories" id="{{ dir.id }}">
+                <img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt=""> {{ dir.name }}
             </summary>
             <ul>
                 {% include 'file_tree.html' with parent_id=dir %}
@@ -17,11 +13,8 @@
 {% endfor %}
 {% for file in files %}
     {% if file.parent == parent_id and file.availability %}
-        <li>
+        <li class="clickable-files" id="{{ file.id }}">
             <img src="{% static 'webIDE/Images/mac-file.png' %}" class="folder" alt=""> {{ file.name }}
-            <label>
-                <input type="checkbox">
-            </label>
         </li>
     {% endif %}
 {% endfor %}
