@@ -3,6 +3,7 @@
     --secondary-color: #ECEFF4;
     --trimary-color: #999;
     --text-color: #0D1117;
+    --highlight-color: green;
     --button-hover-color: rgba(138, 168, 197);
 }
 
@@ -11,6 +12,7 @@
     --secondary-color: #161B22;
     --text-color: #D8DEE9;
     --button-hover-color: #4C566A;
+    --highlight-color: greenyellow;
 }
 
 * {
@@ -48,6 +50,28 @@ body {
     background-color: var(--button-hover-color);
 }
 
+.dropdown {
+    background-color: var(--secondary-color);
+}
+.add-name {
+    background-color: var(--secondary-color);
+}
+
+#compile-submit {
+    background-color: var(--secondary-color);
+    border: none;
+}
+
+#compile-submit:hover {
+    background-color: var(--button-hover-color);
+}
+
+.dropdown:hover {
+    background-color: var(--button-hover-color);
+    transition-duration: 0.2s;
+    transition-timing-function: ease-in-out;
+}
+
 .code {
     background-color: var(--secondary-color);
 }
@@ -79,7 +103,7 @@ body {
 }
 
 .opened {
-    color: var(--trimary-color);
+    color: var(--highlight-color);
 }
 
 .fragment {

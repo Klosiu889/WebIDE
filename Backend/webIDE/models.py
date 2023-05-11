@@ -11,7 +11,7 @@ class Item(models.Model):
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=200, blank=True, null=True)
     creation_date = models.DateTimeField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     availability = models.BooleanField(default=True)
     availability_change_date = models.DateTimeField()
     change_date = models.DateTimeField()

@@ -131,6 +131,25 @@ i {
     text-align: left;
 }
 
+.dropdown {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+
+    font-size: 1em;
+}
+
+.add-name {
+    width: 90%;
+}
+
+#compile-submit {
+    width: 100%;
+    height: 30px;
+    font: var(--font);
+}
+
 .files {
     grid-area: files;
     display: block;
@@ -158,6 +177,10 @@ i {
     font-size: 1em;
 
     text-align: left;
+}
+
+.opened {
+    font-weight: bold;
 }
 
 .code {

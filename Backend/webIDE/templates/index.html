@@ -16,13 +16,51 @@
         <ol>
             <li><a href="#">File</a>
                 <ul>
-                    <li id="add-file-button"><a href="#">Add file</a></li>
-                    <li id="add-dir-button"><a href="#">Add directory</a></li>
-                    <li id="save-button"><a href="#">Save</a></li>
-                    <li id="delete-button"><a href="#">Delete</a></li>
+                    <li id="add-file-button">
+                        <form action="/webIDE/add_file/" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="parent" id="add-file-parent">
+                            <label for="add-file-name"></label><input type="text" name="name" id="add-file-name" class="add-name" placeholder="Type name: ">
+                            <input type="submit" style="border: none" id="add-file-submit" class="dropdown" value="Add file">
+                        </form>
+                    </li>
+                    <li id="add-dir-button">
+                        <form action="/webIDE/add_directory/" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="parent" id="add-dir-parent">
+                            <label for="add-dir-name"></label><input type="text" name="name" id="add-dir-name" class="add-name" placeholder="Type name: ">
+                            <input type="submit" style="border: none" id="add-dir-submit" class="dropdown" value="Add directory">
+                        </form>
+                    </li>
+                    <li id="save-button">
+                        <form action="/webIDE/save_file/" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" id="save-id">
+                            <input type="hidden" name="content" id="save-content">
+                            <input type="submit" style="border: none" id="save-submit" class="dropdown" value="Save">
+                        </form>
+                    </li>
+                    <li id="delete-button">
+                        <form action="/webIDE/delete_item/" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="id" id="delete-id">
+                            <input type="hidden" name="type" id="delete-type">
+                            <input type="submit" style="border: none" id="delete-submit" class="dropdown" value="Delete">
+                        </form>
+                    </li>
                 </ul>
             </li>
-            <li><a href="#">Compile</a></li>
+            <li>
+                <form action="/webIDE/compile_file/" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="standard" id="compile-standard">
+                    <input type="hidden" name="optimisation" id="compile-optimisation">
+                    <input type="hidden" name="processor" id="compile-processor">
+                    <input type="hidden" name="dependant" id="compile-dependant">
+                    <input type="hidden" name="file" id="compile-file">
+                    <input type="submit" id="compile-submit" value="Compile">
+                </form>
+            </li>
         </ol>
         <i id="dark-mode-toggle" class="bi bi-brightness-high-fill"></i>
     </div>
@@ -58,29 +96,29 @@
     </div>
 
     <div id="standard" class="options">
-        <div class="options-item"><input type="radio" name="version" value="c89" id="c89">
+        <div class="options-item"><input type="radio" name="standard" value="std-c89" id="c89">
             <label for="c89">C89</label></div>
-        <div class="options-item"><input type="radio" name="version" value="c99" id="c99">
+        <div class="options-item"><input type="radio" name="standard" value="std-c99" id="c99">
             <label for="c99">C99</label></div>
-        <div class="options-item"><input type="radio" name="version" value="c11" id="c11">
+        <div class="options-item"><input type="radio" name="standard" value="std-c11" id="c11">
             <label for="c11">C11</label></div>
     </div>
 
     <div id="optimisation" class="options">
-        <div class="options-item"><input type="checkbox" name="version" value="o2" id="o2">
-            <label for="o2">O2</label></div>
-        <div class="options-item"><input type="checkbox" name="version" value="o3" id="o3">
-            <label for="o3">O3</label></div>
-        <div class="options-item"><input type="checkbox" name="version" value="o7" id="o7">
-            <label for="o7">O7</label></div>
+        <div class="options-item"><input type="checkbox" name="optimisation" value="nogcse" id="nogcse">
+            <label for="nogcse">nogcse</label></div>
+        <div class="options-item"><input type="checkbox" name="optimisation" value="noinvariant" id="noinvariant">
+            <label for="noinvariant">noinvariant</label></div>
+        <div class="options-item"><input type="checkbox" name="optimisation" value="noinduction" id="noinduction">
+            <label for="noinduction">noinduction</label></div>
     </div>
 
     <div id="processor" class="options">
-        <div class="options-item"><input type="radio" name="version" value="MCS51" id="mcs51" class="processor-radio">
+        <div class="options-item"><input type="radio" name="processor" value="mmcs51" id="mcs51" class="processor-radio">
             <label for="mcs51">MCS51</label></div>
-        <div class="options-item"><input type="radio" name="version" value="Z80" id="z80" class="processor-radio">
+        <div class="options-item"><input type="radio" name="processor" value="mz80" id="z80" class="processor-radio">
             <label for="z80">Z80</label></div>
-        <div class="options-item"><input type="radio" name="version" value="STM8" id="stm8" class="processor-radio">
+        <div class="options-item"><input type="radio" name="processor" value="mstm8" id="stm8" class="processor-radio">
             <label for="stm8">STM8</label></div>
     </div>
 
@@ -88,15 +126,28 @@
     </div>
 
     <div id="dependent-mcs51" class="options">
-        MCS51
+        <div class="options-item"><input type="radio" name="processor" value="model-small" id="model-small" class="processor-radio">
+            <label for="model-small">model-small</label></div>
+        <div class="options-item"><input type="radio" name="processor" value="model-medium" id="model-medium" class="processor-radio">
+            <label for="model-medium">model-medium</label></div>
+        <div class="options-item"><input type="radio" name="processor" value="STM8" id="model-large" class="processor-radio">
+            <label for="model-large">model-large</label></div>
+        <div class="options-item"><input type="radio" name="processor" value="STM8" id="xstack" class="processor-radio">
+            <label for="xstack">xstack</label></div>
     </div>
 
     <div id="dependent-z80" class="options">
-        Z80
+        <div class="options-item"><input type="radio" name="processor" value="MCS51" id="reserve-regs-iy" class="processor-radio">
+            <label for="reserve-regs-iy">reserve-regs-iy</label></div>
+        <div class="options-item"><input type="radio" name="processor" value="Z80" id="fno-omit-frame-pointer" class="processor-radio">
+            <label for="fno-omit-frame-pointer">fno-omit-frame-pointer</label></div>
     </div>
 
     <div id="dependent-stm8" class="options">
-        STM8
+        <div class="options-item"><input type="radio" name="processor" value="model-medium" id="model-medium-stm8" class="processor-radio">
+            <label for="model-medium-stm8">model-medium</label></div>
+        <div class="options-item"><input type="radio" name="processor" value="model-large" id="model-large-stm8" class="processor-radio">
+            <label for="model-large-stm8">model-large</label></div>
     </div>
 
 </div>

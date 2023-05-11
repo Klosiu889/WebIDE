@@ -13,10 +13,10 @@ let openedFile = null
 let openedDirectory = null
 let lastOpened = null
 
-const addFileButton = document.getElementById('add-file-button')
-const addDirButton = document.getElementById('add-dir-button')
-const deleteButton = document.getElementById('delete-button')
-const saveButton = document.getElementById('save-button')
+const addFileButton = document.getElementById('add-file-submit')
+const addDirButton = document.getElementById('add-dir-submit')
+const deleteButton = document.getElementById('delete-submit')
+const saveButton = document.getElementById('save-submit')
 
 const updateLineNumbers = () => {
     const numberOfLines = textarea.value.split('\n').length;
@@ -38,58 +38,50 @@ textarea.addEventListener('keydown', event => {
     }
 })
 
+function addFile() {
+    console.log(openedDirectory)
+    const name_field = document.getElementById('add-file-name')
+    const directory_field = document.getElementById('add-file-parent')
+    name_field.value = name_field.value.trim()
+
+    if (openedDirectory != null) directory_field.value = openedDirectory.id.toString()
+    else directory_field.value = ""
+}
+
+function addDirectory() {
+    const name_field = document.getElementById('add-dir-name')
+    const directory_field = document.getElementById('add-dir-parent')
+    name_field.value = name_field.value.trim()
+
+    if (openedDirectory != null) directory_field.value = openedDirectory.id.toString()
+    else directory_field.value = ""
+}
+
 function deleteItem() {
-    if ((lastOpened === "directory" && openedDirectory != null) ||
-        (lastOpened === "file" && openedFile != null)) {
-        const xhr = new XMLHttpRequest()
-        xhr.open('POST', '/webIDE/delete_item/', true)
-        xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.onload = () => {
-            if (xhr.status === 200) {
-                console.log('Item deleted')
-            }
-            else {
-                console.log('Error deleting item')
-            }
+    if (lastOpened === "directory") {
+        if (openedDirectory != null) {
+            const id_field = document.getElementById('delete-id')
+            const type_field = document.getElementById('delete-type')
+            id_field.value = openedDirectory.id.toString()
+            type_field.value = "directory"
         }
-        xhr.onerror = () => {
-            console.log('Error deleting item')
+    }
+    else if (lastOpened === "file") {
+        if (openedFile != null) {
+            const id_field = document.getElementById('delete-id')
+            const type_field = document.getElementById('delete-type')
+            id_field.value = openedFile.id.toString()
+            type_field.value = "file"
         }
-
-        const dataToSend = {
-            id: (lastOpened === "directory" ? openedDirectory.id.toString() : openedFile.id.toString()),
-            type: lastOpened
-        }
-
-        xhr.send(JSON.stringify(dataToSend))
     }
 }
 
 function saveChanges() {
     if (openedFile != null) {
-        openedFile.content = textarea.value
-
-        const xhr = new XMLHttpRequest()
-        xhr.open('POST', '/webIDE/save_file/', true)
-        xhr.setRequestHeader('Content-Type', 'application/json')
-        xhr.onload = () => {
-            if (xhr.status === 200) {
-                console.log('File saved')
-            }
-            else {
-                console.log('Error saving file')
-            }
-        }
-        xhr.onerror = () => {
-            console.log('Error saving file')
-        }
-
-        const dataToSend = {
-            id: openedFile.id.toString(),
-            content: openedFile.content.toString()
-        }
-
-        xhr.send(JSON.stringify(dataToSend))
+        const id_field = document.getElementById('save-id')
+        const content_field = document.getElementById('save-content')
+        id_field.value = openedFile.id.toString()
+        content_field.value = textarea.value
     }
 }
 
@@ -124,7 +116,8 @@ function clickFile(evt) {
     lastOpened = "file"
 }
 
-
+addFileButton.addEventListener('click', () => addFile())
+addDirButton.addEventListener('click', () => addDirectory())
 deleteButton.addEventListener('click', () => deleteItem())
 saveButton.addEventListener('click', () => saveChanges())
 
@@ -135,3 +128,42 @@ for (let i = 0; i < clickableDirectories.length; i++) {
 for (let i = 0; i < clickableFiles.length; i++) {
     clickableFiles[i].addEventListener('click', (evt) => clickFile(evt))
 }
+
+function compile(evt) {
+    const standard= document.querySelectorAll('#standard input[type="radio"]:checked')
+    const optimisations = document.querySelectorAll('#optimisation input[type="checkbox"]:checked')
+    const processor = document.querySelectorAll('#processor input[type="radio"]:checked')
+    let dependant = null;
+    if (processor[0] != null) {
+        switch (processor[0].value) {
+            case 'msc51':
+                dependant = document.querySelectorAll('#dependent-mcs51 input[type="radio"]:checked')
+                break
+            case 'z80':
+                dependant = document.querySelectorAll('#dependent-z80 input[type="radio"]:checked')
+                break
+            case 'stm8':
+                dependant = document.querySelectorAll('#dependent-stm8 input[type="radio"]:checked')
+                break
+        }
+    }
+
+    const standardInput = document.getElementById('compile-standard')
+    const optimisationsInput = document.getElementById('compile-optimisation')
+    const processorInput = document.getElementById('compile-processor')
+    const dependantInput = document.getElementById('compile-dependant')
+    const fileInput = document.getElementById('compile-file')
+
+    standardInput.value = standard[0] == null ? "" : standard[0].value
+    optimisationsInput.value = ""
+    for (let i = 0; i < optimisations.length; i++) {
+        optimisationsInput.value += optimisations[i].value + " "
+    }
+    processorInput.value = processor[0] == null ? "" : processor[0].value
+    fileInput.value = openedFile == null ? "" : openedFile.id.toString()
+}
+
+compile(null)
+
+const compileButton = document.getElementById('compile-submit')
+compileButton.addEventListener('click', (evt) => compile(evt))
