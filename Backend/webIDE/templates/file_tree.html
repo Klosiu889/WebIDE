@@ -2,7 +2,7 @@
 {% for dir in directories %}
     {% if dir.parent == parent_id and dir.availability%}
         <li><details>
-            <summary class="clickable-directories" id="{{ dir.id }}">
+            <summary class="clickable-directories" id="{{ dir.path }}">
                 <img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt=""> {{ dir.name }}
             </summary>
             <ul>
@@ -13,7 +13,7 @@
 {% endfor %}
 {% for file in files %}
     {% if file.parent == parent_id and file.availability %}
-        <li class="clickable-files" id="{{ file.id }}">
+        <li class="clickable-files" id="{{ file.path }}">
             <img src="{% static 'webIDE/Images/mac-file.png' %}" class="folder" alt=""> {{ file.name }}
         </li>
     {% endif %}

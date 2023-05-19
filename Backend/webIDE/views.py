@@ -1,8 +1,10 @@
+import subprocess
 from datetime import datetime
 
+from django.http import JsonResponse
 from django.shortcuts import render
+
 from .models import Directory, File
-import subprocess
 
 
 def render_website(request):
@@ -22,14 +24,14 @@ def render_website(request):
 def add_file(request):
     if request.method == 'POST' and request.POST.get('name') != "":
         file_name = request.POST.get('name')
-        file = None
         if request.POST.get('parent') != "":
-            parent_id = int(request.POST.get('parent'))
-            parent = Directory.objects.get(id=parent_id)
-            file = File(name=file_name, creation_date=datetime.now(), availability=True,
+            parent_path = request.POST.get('parent')
+            parent = Directory.objects.get(path=parent_path)
+            new_path = parent.path + '/' + file_name
+            file = File(path=new_path, name=file_name, creation_date=datetime.now(), availability=True,
                         availability_change_date=datetime.now(), change_date=datetime.now(), parent=parent)
         else:
-            file = File(name=file_name, creation_date=datetime.now(), availability=True,
+            file = File(path=file_name, name=file_name, creation_date=datetime.now(), availability=True,
                         availability_change_date=datetime.now(), change_date=datetime.now())
         file.save()
     return render_website(request)
@@ -38,30 +40,31 @@ def add_file(request):
 def add_directory(request):
     if request.method == 'POST' and request.POST.get('name') != "":
         directory_name = request.POST.get('name')
-        directory = None
         if request.POST.get('parent') != "":
-            parent_id = int(request.POST.get('parent'))
-            parent = Directory.objects.get(id=parent_id)
-            directory = Directory(name=directory_name, creation_date=datetime.now(), availability=True,
+            parent_path = request.POST.get('parent')
+            parent = Directory.objects.get(path=parent_path)
+            new_path = parent.path + '/' + directory_name
+            directory = Directory(path=new_path, name=directory_name, creation_date=datetime.now(), availability=True,
                                   availability_change_date=datetime.now(), change_date=datetime.now(), parent=parent)
         else:
-            directory = Directory(name=directory_name, creation_date=datetime.now(), availability=True,
-                                  availability_change_date=datetime.now(), change_date=datetime.now())
+            directory = Directory(path=directory_name, name=directory_name, creation_date=datetime.now(),
+                                  availability=True, availability_change_date=datetime.now(),
+                                  change_date=datetime.now())
         directory.save()
     return render_website(request)
 
 
 def delete_item(request):
-    if request.method == 'POST' and request.POST.get('id') != "":
-        item_id = int(request.POST.get('id'))
+    if request.method == 'POST' and request.POST.get('path') != "":
+        item_path = request.POST.get('path')
         item_type = request.POST.get('type')
         if item_type == 'directory':
-            directory = Directory.objects.get(id=item_id)
+            directory = Directory.objects.get(path=item_path)
             directory.availability = False
             directory.availability_change_date = datetime.now()
             directory.save()
         elif item_type == 'file':
-            file = File.objects.get(id=item_id)
+            file = File.objects.get(path=item_path)
             file.availability = False
             file.availability_change_date = datetime.now()
             file.save()
@@ -70,10 +73,10 @@ def delete_item(request):
 
 
 def save_file(request):
-    if request.method == 'POST' and request.POST.get('id') != "":
-        file_id = int(request.POST.get('id'))
+    if request.method == 'POST' and request.POST.get('path') != "":
+        file_path = request.POST.get('path')
         file_content = request.POST.get('content')
-        file = File.objects.get(id=file_id)
+        file = File.objects.get(path=file_path)
         file.content = file_content
         file.change_date = datetime.now()
         file.save()
@@ -82,13 +85,14 @@ def save_file(request):
 
 
 def compile_file(request):
-    if request.method == 'POST' and request.POST.get('id') != "":
+    if request.method == 'POST' and request.POST.get('file') != "":
         standard = request.POST.get('standard')
-        optimizations = request.POST.get('optimization')
+        optimisations = request.POST.get('optimisation')
+        optimisations_split = optimisations.split(' ')
         processor = request.POST.get('processor')
         dependant = request.POST.get('dependant')
-        file_id = int(request.POST.get('file'))
-        file = File.objects.get(id=file_id)
+        file_path = request.POST.get('file')
+        file = File.objects.get(path=file_path)
 
         command = "sdcc"
         if standard != "":
@@ -97,19 +101,35 @@ def compile_file(request):
         if processor != "":
             command += " -" + processor
 
+        for optimisation in optimisations_split:
+            if optimisation != "":
+                command += " --" + optimisation
+
+        if dependant != "":
+            command += " --" + dependant
+
         command += " " + file.name
         print(command)
-        file_create = open(file.name, 'w')
+        subprocess.run("mkdir compile", shell=True)
+        file_create = open("compile/" + file.name, 'w')
         file_create.write(file.content)
         file_create.close()
-        subprocess.run(command, shell=True)
-        new_entry = File(name=file.name[:-2] + ".asm", creation_date=datetime.now(), availability=True, availability_change_date=datetime.now(), change_date=datetime.now(), parent=file.parent)
-        new_entry.content = open(file.name[:-2] + ".asm", 'r').read()
+        result = subprocess.run("cd compile && " + command, shell=True)
+
+        if result.returncode != 0:
+            subprocess.run("rm -rf compile", shell=True)
+            return JsonResponse({'success': False})
+
+        new_file_name = file.name[:-2] + ".asm"
+        new_file_path = file.path[:-len(file.name)] + new_file_name
+        print(file.path + "\n" + new_file_name + "\n" + new_file_path)
+        new_entry = File(path=new_file_path, name=new_file_name, creation_date=datetime.now(), availability=True,
+                         availability_change_date=datetime.now(), change_date=datetime.now(), parent=file.parent)
+        new_entry.content = open("compile/" + file.name[:-2] + ".asm", 'r').read()
         new_entry.save()
-        subprocess.run("rm " + file.name[:-2] + "*", shell=True)
+        subprocess.run("rm -rf compile", shell=True)
 
-
-    return render_website(request)
+    return JsonResponse({'success': True})
 
 
 def index(request):

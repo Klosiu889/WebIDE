@@ -35,7 +35,7 @@
                     <li id="save-button">
                         <form action="/webIDE/save_file/" method="post">
                             {% csrf_token %}
-                            <input type="hidden" name="id" id="save-id">
+                            <input type="hidden" name="path" id="save-path">
                             <input type="hidden" name="content" id="save-content">
                             <input type="submit" style="border: none" id="save-submit" class="dropdown" value="Save">
                         </form>
@@ -43,7 +43,7 @@
                     <li id="delete-button">
                         <form action="/webIDE/delete_item/" method="post">
                             {% csrf_token %}
-                            <input type="hidden" name="id" id="delete-id">
+                            <input type="hidden" name="path" id="delete-path">
                             <input type="hidden" name="type" id="delete-type">
                             <input type="submit" style="border: none" id="delete-submit" class="dropdown" value="Delete">
                         </form>
@@ -114,11 +114,11 @@
     </div>
 
     <div id="processor" class="options">
-        <div class="options-item"><input type="radio" name="processor" value="mmcs51" id="mcs51" class="processor-radio">
+        <div class="options-item"><input type="radio" name="processor" value="mcs51" id="mcs51" class="processor-radio">
             <label for="mcs51">MCS51</label></div>
-        <div class="options-item"><input type="radio" name="processor" value="mz80" id="z80" class="processor-radio">
+        <div class="options-item"><input type="radio" name="processor" value="z80" id="z80" class="processor-radio">
             <label for="z80">Z80</label></div>
-        <div class="options-item"><input type="radio" name="processor" value="mstm8" id="stm8" class="processor-radio">
+        <div class="options-item"><input type="radio" name="processor" value="stm8" id="stm8" class="processor-radio">
             <label for="stm8">STM8</label></div>
     </div>
 
@@ -126,27 +126,27 @@
     </div>
 
     <div id="dependent-mcs51" class="options">
-        <div class="options-item"><input type="radio" name="processor" value="model-small" id="model-small" class="processor-radio">
+        <div class="options-item"><input type="radio" name="mcs51" value="model-small" id="model-small" class="processor-radio">
             <label for="model-small">model-small</label></div>
-        <div class="options-item"><input type="radio" name="processor" value="model-medium" id="model-medium" class="processor-radio">
+        <div class="options-item"><input type="radio" name="mcs51" value="model-medium" id="model-medium" class="processor-radio">
             <label for="model-medium">model-medium</label></div>
-        <div class="options-item"><input type="radio" name="processor" value="STM8" id="model-large" class="processor-radio">
+        <div class="options-item"><input type="radio" name="mcs51" value="model-large" id="model-large" class="processor-radio">
             <label for="model-large">model-large</label></div>
-        <div class="options-item"><input type="radio" name="processor" value="STM8" id="xstack" class="processor-radio">
+        <div class="options-item"><input type="radio" name="mcs51" value="xstack" id="xstack" class="processor-radio">
             <label for="xstack">xstack</label></div>
     </div>
 
     <div id="dependent-z80" class="options">
-        <div class="options-item"><input type="radio" name="processor" value="MCS51" id="reserve-regs-iy" class="processor-radio">
+        <div class="options-item"><input type="radio" name="z80" value="reserve-regs-iy" id="reserve-regs-iy" class="processor-radio">
             <label for="reserve-regs-iy">reserve-regs-iy</label></div>
-        <div class="options-item"><input type="radio" name="processor" value="Z80" id="fno-omit-frame-pointer" class="processor-radio">
+        <div class="options-item"><input type="radio" name="z80" value="fno-omit-frame-pointer" id="fno-omit-frame-pointer" class="processor-radio">
             <label for="fno-omit-frame-pointer">fno-omit-frame-pointer</label></div>
     </div>
 
     <div id="dependent-stm8" class="options">
-        <div class="options-item"><input type="radio" name="processor" value="model-medium" id="model-medium-stm8" class="processor-radio">
+        <div class="options-item"><input type="radio" name="stm8" value="model-medium" id="model-medium-stm8" class="processor-radio">
             <label for="model-medium-stm8">model-medium</label></div>
-        <div class="options-item"><input type="radio" name="processor" value="model-large" id="model-large-stm8" class="processor-radio">
+        <div class="options-item"><input type="radio" name="stm8" value="model-large" id="model-large-stm8" class="processor-radio">
             <label for="model-large-stm8">model-large</label></div>
     </div>
 

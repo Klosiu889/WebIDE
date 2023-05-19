@@ -8,10 +8,11 @@ class User(models.Model):
 
 
 class Item(models.Model):
+    path = models.CharField(max_length=200, primary_key=True)
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=200, blank=True, null=True)
     creation_date = models.DateTimeField()
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     availability = models.BooleanField(default=True)
     availability_change_date = models.DateTimeField()
     change_date = models.DateTimeField()
@@ -23,17 +24,7 @@ class Item(models.Model):
 class Directory(Item):
     parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
 
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['name', 'parent'], name='unique_directory')
-        ]
-
 
 class File(Item):
     parent = models.ForeignKey(Directory, on_delete=models.CASCADE, blank=True, null=True)
     content = models.TextField(blank=True, null=True)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['name', 'parent'], name='unique_file')
-        ]

@@ -39,12 +39,11 @@ textarea.addEventListener('keydown', event => {
 })
 
 function addFile() {
-    console.log(openedDirectory)
     const name_field = document.getElementById('add-file-name')
     const directory_field = document.getElementById('add-file-parent')
     name_field.value = name_field.value.trim()
 
-    if (openedDirectory != null) directory_field.value = openedDirectory.id.toString()
+    if (openedDirectory != null) directory_field.value = openedDirectory.path.toString()
     else directory_field.value = ""
 }
 
@@ -53,24 +52,24 @@ function addDirectory() {
     const directory_field = document.getElementById('add-dir-parent')
     name_field.value = name_field.value.trim()
 
-    if (openedDirectory != null) directory_field.value = openedDirectory.id.toString()
+    if (openedDirectory != null) directory_field.value = openedDirectory.path.toString()
     else directory_field.value = ""
 }
 
 function deleteItem() {
     if (lastOpened === "directory") {
         if (openedDirectory != null) {
-            const id_field = document.getElementById('delete-id')
+            const path_field = document.getElementById('delete-path')
             const type_field = document.getElementById('delete-type')
-            id_field.value = openedDirectory.id.toString()
+            path_field.value = openedDirectory.path.toString()
             type_field.value = "directory"
         }
     }
     else if (lastOpened === "file") {
         if (openedFile != null) {
-            const id_field = document.getElementById('delete-id')
+            const path_field = document.getElementById('delete-path')
             const type_field = document.getElementById('delete-type')
-            id_field.value = openedFile.id.toString()
+            path_field.value = openedFile.path.toString()
             type_field.value = "file"
         }
     }
@@ -78,9 +77,9 @@ function deleteItem() {
 
 function saveChanges() {
     if (openedFile != null) {
-        const id_field = document.getElementById('save-id')
+        const path_field = document.getElementById('save-path')
         const content_field = document.getElementById('save-content')
-        id_field.value = openedFile.id.toString()
+        path_field.value = openedFile.path.toString()
         content_field.value = textarea.value
     }
 }
@@ -91,7 +90,7 @@ function clickDirectory(evt) {
     evt.target.classList.toggle('opened')
 
     for (let i = 0; i < directories.length; i++) {
-        if (directories[i].id.toString() === evt.target.id.toString()) {
+        if (directories[i].path.toString() === evt.target.id.toString()) {
             openedDirectory = directories[i]
         }
     }
@@ -105,7 +104,7 @@ function clickFile(evt) {
     evt.target.classList.toggle('opened')
 
     for (let i = 0; i < files.length; i++) {
-        if (files[i].id.toString() === evt.target.id.toString()) {
+        if (files[i].path.toString() === evt.target.id.toString()) {
             codeBar.innerHTML = files[i].name
             openedFile = files[i]
             textarea.value = files[i].content
@@ -129,14 +128,14 @@ for (let i = 0; i < clickableFiles.length; i++) {
     clickableFiles[i].addEventListener('click', (evt) => clickFile(evt))
 }
 
-function compile(evt) {
+function compile() {
     const standard= document.querySelectorAll('#standard input[type="radio"]:checked')
     const optimisations = document.querySelectorAll('#optimisation input[type="checkbox"]:checked')
     const processor = document.querySelectorAll('#processor input[type="radio"]:checked')
     let dependant = null;
     if (processor[0] != null) {
         switch (processor[0].value) {
-            case 'msc51':
+            case 'mcs51':
                 dependant = document.querySelectorAll('#dependent-mcs51 input[type="radio"]:checked')
                 break
             case 'z80':
@@ -160,10 +159,9 @@ function compile(evt) {
         optimisationsInput.value += optimisations[i].value + " "
     }
     processorInput.value = processor[0] == null ? "" : processor[0].value
-    fileInput.value = openedFile == null ? "" : openedFile.id.toString()
+    fileInput.value = openedFile == null ? "" : openedFile.path.toString()
+    dependantInput.value = dependant == null ? "" : dependant[0] == null ? "" : dependant[0].value
 }
 
-compile(null)
-
 const compileButton = document.getElementById('compile-submit')
-compileButton.addEventListener('click', (evt) => compile(evt))
+compileButton.addEventListener('click', compile)
