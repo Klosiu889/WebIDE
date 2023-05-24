@@ -1,6 +1,6 @@
 {% load static %}
 {% for dir in directories %}
-    {% if dir.parent == parent_id and dir.availability%}
+    {% if dir.parent == parent_id and dir.availability %}
         <li><details>
             <summary class="clickable-directories" id="{{ dir.path }}">
                 <img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt=""> {{ dir.name }}

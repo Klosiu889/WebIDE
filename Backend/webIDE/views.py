@@ -8,8 +8,8 @@ from .models import Directory, File
 
 
 def render_website(request):
-    directories = Directory.objects.all()
-    files = File.objects.all()
+    directories = Directory.objects.filter(owner=request.user)
+    files = File.objects.filter(owner=request.user)
     directories_list = list(directories.values())
     files_list = list(files.values())
     data = {
@@ -28,11 +28,21 @@ def add_file(request):
             parent_path = request.POST.get('parent')
             parent = Directory.objects.get(path=parent_path)
             new_path = parent.path + '/' + file_name
-            file = File(path=new_path, name=file_name, creation_date=datetime.now(), availability=True,
-                        availability_change_date=datetime.now(), change_date=datetime.now(), parent=parent)
+            file = File(path=new_path, name=file_name,
+                        creation_date=datetime.now(),
+                        owner=request.user,
+                        availability=True,
+                        availability_change_date=datetime.now(),
+                        change_date=datetime.now(),
+                        parent=parent)
         else:
-            file = File(path=file_name, name=file_name, creation_date=datetime.now(), availability=True,
-                        availability_change_date=datetime.now(), change_date=datetime.now())
+            file = File(path=request.user.username + "/" + file_name,
+                        name=file_name,
+                        creation_date=datetime.now(),
+                        owner=request.user,
+                        availability=True,
+                        availability_change_date=datetime.now(),
+                        change_date=datetime.now())
         file.save()
     return render_website(request)
 
@@ -44,11 +54,20 @@ def add_directory(request):
             parent_path = request.POST.get('parent')
             parent = Directory.objects.get(path=parent_path)
             new_path = parent.path + '/' + directory_name
-            directory = Directory(path=new_path, name=directory_name, creation_date=datetime.now(), availability=True,
-                                  availability_change_date=datetime.now(), change_date=datetime.now(), parent=parent)
+            directory = Directory(path=new_path, name=directory_name,
+                                  creation_date=datetime.now(),
+                                  owner=request.user,
+                                  availability=True,
+                                  availability_change_date=datetime.now(),
+                                  change_date=datetime.now(),
+                                  parent=parent)
         else:
-            directory = Directory(path=directory_name, name=directory_name, creation_date=datetime.now(),
-                                  availability=True, availability_change_date=datetime.now(),
+            directory = Directory(path=request.user.username + "/" + directory_name,
+                                  name=directory_name,
+                                  creation_date=datetime.now(),
+                                  owner=request.user,
+                                  availability=True,
+                                  availability_change_date=datetime.now(),
                                   change_date=datetime.now())
         directory.save()
     return render_website(request)

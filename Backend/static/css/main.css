@@ -1,0 +1,79 @@
+:root {
+    --primary-color: #D8DEE9;
+    --secondary-color: #ECEFF4;
+    --trimary-color: #999;
+    --text-color: #0D1117;
+    --highlight-color: green;
+    --button-hover-color: rgba(138, 168, 197);
+
+    --font: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu;
+}
+
+.darkmode {
+    --primary-color: #0D1117;
+    --secondary-color: #161B22;
+    --text-color: #D8DEE9;
+    --button-hover-color: #4C566A;
+    --highlight-color: greenyellow;
+}
+
+html, body {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    margin: 0;
+    padding: 0;
+
+    font-family: var(--font);
+    font-size: 1.5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+}
+
+.panel {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    font-size: 0.75em;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+.panel-link {
+    display: inline-block;
+}
+
+.panel-link a {
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+    display: inline-block;
+}
+
+.panel-link a:hover {
+    background-color: var(--button-hover-color);
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.2s;
+}
+
+.panel-button {
+    font-size: 1em;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.5rem;
+    margin: 0.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.panel-button:hover {
+    background-color: var(--button-hover-color);
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.2s;
+}

@@ -1,0 +1,24 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <div class="panel">
+            <h2>Welcome back {{ user.username }}</h2>
+            <div class="panel-link">
+                <a href="{% url 'login' %}">Go to editor</a>
+                <a href="{% url 'logout' %}">Log Out</a>
+            </div>
+        </div>
+    {% else %}
+        <div class="panel">
+            <h2>You are not logged in</h2>
+            <div class="panel-link">
+                <a href="{% url 'login' %}">Log In</a>
+                <a href="{% url 'signup' %}">Sign Up</a>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
