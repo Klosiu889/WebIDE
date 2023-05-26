@@ -4,31 +4,79 @@ from datetime import datetime
 from django.http import JsonResponse
 from django.shortcuts import render
 
+from .forms import AddFileForm, AddDirectoryForm, DeleteItemForm, SaveFileForm
 from .models import Directory, File
 
 
 def render_website(request):
-    directories = Directory.objects.filter(owner=request.user)
-    files = File.objects.filter(owner=request.user)
-    directories_list = list(directories.values())
-    files_list = list(files.values())
+    directories_db = Directory.objects.filter(owner=request.user)
+    files_db = File.objects.filter(owner=request.user)
+
+    directories = []
+    files = []
+    for directory in directories_db:
+        directories.append({
+            'path': directory.path,
+            'name': directory.name,
+            'parent': directory.parent.path if directory.parent else "",
+            'availability': directory.availability,
+        })
+
+    for file in files_db:
+        files.append({
+            'path': file.path,
+            'name': file.name,
+            'parent': file.parent.path if file.parent else "",
+            'content': file.content if file.content else '',
+            'availability': file.availability,
+        })
+
+    home_path = request.user.username
+    if Directory.objects.filter(path=home_path).exists():
+        home_db = Directory.objects.get(path=home_path)
+    else:
+        home_db = Directory(path=home_path,
+                            name=request.user.username,
+                            creation_date=datetime.now(),
+                            owner=request.user,
+                            availability=True,
+                            availability_change_date=datetime.now(),
+                            change_date=datetime.now(),
+                            parent=None,
+                            description="Home directory"
+                            )
+        home_db.save()
+
+    home = {
+        'path': home_db.path,
+        'name': home_db.name,
+    }
+
     data = {
+        'home': home,
         'directories': directories,
         'files': files,
-        'directories_list': directories_list,
-        'files_list': files_list,
+        'form_add_file': AddFileForm(),
+        'form_add_dir': AddDirectoryForm(),
+        'form_delete_item': DeleteItemForm(),
+        'form_save_file': SaveFileForm(),
     }
     return render(request, 'index.html', data)
 
 
-def add_file(request):
+def add_item(request):
     if request.method == 'POST' and request.POST.get('name') != "":
-        file_name = request.POST.get('name')
-        if request.POST.get('parent') != "":
-            parent_path = request.POST.get('parent')
-            parent = Directory.objects.get(path=parent_path)
-            new_path = parent.path + '/' + file_name
-            file = File(path=new_path, name=file_name,
+        item_name = request.POST.get('name')
+        parent_path = request.POST.get('parent')
+        parent = Directory.objects.get(path=parent_path)
+        item_path = parent_path + '/' + item_name
+        item_type = request.POST.get('type')
+
+        if item_type == 'file':
+            if File.objects.filter(path=item_path).exists() and File.objects.get(path=item_path).availability:
+                return JsonResponse({'status': 'error', 'message': 'File already exists'})
+            item = File(path=item_path,
+                        name=item_name,
                         creation_date=datetime.now(),
                         owner=request.user,
                         availability=True,
@@ -36,41 +84,27 @@ def add_file(request):
                         change_date=datetime.now(),
                         parent=parent)
         else:
-            file = File(path=request.user.username + "/" + file_name,
-                        name=file_name,
-                        creation_date=datetime.now(),
-                        owner=request.user,
-                        availability=True,
-                        availability_change_date=datetime.now(),
-                        change_date=datetime.now())
-        file.save()
-    return render_website(request)
-
-
-def add_directory(request):
-    if request.method == 'POST' and request.POST.get('name') != "":
-        directory_name = request.POST.get('name')
-        if request.POST.get('parent') != "":
-            parent_path = request.POST.get('parent')
-            parent = Directory.objects.get(path=parent_path)
-            new_path = parent.path + '/' + directory_name
-            directory = Directory(path=new_path, name=directory_name,
-                                  creation_date=datetime.now(),
-                                  owner=request.user,
-                                  availability=True,
-                                  availability_change_date=datetime.now(),
-                                  change_date=datetime.now(),
-                                  parent=parent)
-        else:
-            directory = Directory(path=request.user.username + "/" + directory_name,
-                                  name=directory_name,
-                                  creation_date=datetime.now(),
-                                  owner=request.user,
-                                  availability=True,
-                                  availability_change_date=datetime.now(),
-                                  change_date=datetime.now())
-        directory.save()
-    return render_website(request)
+            if Directory.objects.filter(path=item_path).exists() and Directory.objects.get(path=item_path).availability:
+                return JsonResponse({'status': 'error', 'message': 'Directory already exists'})
+            item = Directory(path=item_path,
+                             name=item_name,
+                             creation_date=datetime.now(),
+                             owner=request.user,
+                             availability=True,
+                             availability_change_date=datetime.now(),
+                             change_date=datetime.now(),
+                             parent=parent)
+        item.save()
+        return JsonResponse({
+            'status': 'ok',
+            'name': item.name,
+            'path': item.path,
+            'parent': item.parent.path,
+            'content': "",
+            'availability': True,
+        })
+    else:
+        return JsonResponse({'status': 'error'})
 
 
 def delete_item(request):
@@ -88,7 +122,9 @@ def delete_item(request):
             file.availability_change_date = datetime.now()
             file.save()
 
-    return render_website(request)
+        return JsonResponse({'status': 'ok'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Deleting failed'})
 
 
 def save_file(request):
@@ -100,7 +136,9 @@ def save_file(request):
         file.change_date = datetime.now()
         file.save()
 
-    return render_website(request)
+        return JsonResponse({'status': 'ok', 'content': file_content})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Saving failed.'})
 
 
 def compile_file(request):
@@ -128,27 +166,49 @@ def compile_file(request):
             command += " --" + dependant
 
         command += " " + file.name
-        print(command)
+
         subprocess.run("mkdir compile", shell=True)
         file_create = open("compile/" + file.name, 'w')
         file_create.write(file.content)
         file_create.close()
-        result = subprocess.run("cd compile && " + command, shell=True)
+        result = subprocess.run("cd compile && " + command + " 2> error.err", shell=True)
 
         if result.returncode != 0:
+            error = open("compile/error.err", 'r').read()
             subprocess.run("rm -rf compile", shell=True)
-            return JsonResponse({'success': False})
+            return JsonResponse({
+                'status': 'error',
+                'message': 'Compilation failed with error code: ' + str(result.returncode),
+                'error': 'Error message:\n' + error
+            })
 
         new_file_name = file.name[:-2] + ".asm"
         new_file_path = file.path[:-len(file.name)] + new_file_name
-        print(file.path + "\n" + new_file_name + "\n" + new_file_path)
-        new_entry = File(path=new_file_path, name=new_file_name, creation_date=datetime.now(), availability=True,
-                         availability_change_date=datetime.now(), change_date=datetime.now(), parent=file.parent)
+
+        new_entry = File(
+            path=new_file_path,
+            name=new_file_name,
+            creation_date=datetime.now(),
+            owner=request.user,
+            availability=True,
+            availability_change_date=datetime.now(),
+            change_date=datetime.now(),
+            parent=file.parent)
+
         new_entry.content = open("compile/" + file.name[:-2] + ".asm", 'r').read()
         new_entry.save()
         subprocess.run("rm -rf compile", shell=True)
 
-    return JsonResponse({'success': True})
+        return JsonResponse({
+            'status': 'ok',
+            'name': new_entry.name,
+            'path': new_entry.path,
+            'parent': new_entry.parent.path,
+            'availability': True,
+            'content': new_entry.content
+        })
+    else:
+        return JsonResponse({'status': 'error', 'message': 'File was not selected.'})
 
 
 def index(request):

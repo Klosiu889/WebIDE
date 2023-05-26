@@ -1,18 +1,18 @@
 {% load static %}
 {% for dir in directories %}
-    {% if dir.parent == parent_id and dir.availability %}
+    {% if dir.parent == parent_path and dir.availability %}
         <li><details>
             <summary class="clickable-directories" id="{{ dir.path }}">
                 <img src="{% static 'webIDE/Images/mac-folder.png' %}" class="folder" alt=""> {{ dir.name }}
             </summary>
             <ul>
-                {% include 'file_tree.html' with parent_id=dir %}
+                {% include 'file_tree.html' with parent_path=dir.path %}
             </ul>
         </details></li>
     {% endif %}
 {% endfor %}
 {% for file in files %}
-    {% if file.parent == parent_id and file.availability %}
+    {% if file.parent == parent_path and file.availability %}
         <li class="clickable-files" id="{{ file.path }}">
             <img src="{% static 'webIDE/Images/mac-file.png' %}" class="folder" alt=""> {{ file.name }}
         </li>

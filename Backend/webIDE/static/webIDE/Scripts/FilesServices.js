@@ -1,8 +1,9 @@
-const clickableDirectories = document.querySelectorAll('.clickable-directories')
-const clickableFiles = document.querySelectorAll('.clickable-files')
+let clickableDirectories = document.querySelectorAll('.clickable-directories')
+let clickableFiles = document.querySelectorAll('.clickable-files')
 
+const homeDirectory = JSON.parse(document.getElementById('home').textContent)
 const directories = JSON.parse(document.getElementById('directories').textContent)
-const files = JSON.parse(document.getElementById('files').textContent)
+let files = JSON.parse(document.getElementById('files').textContent)
 
 const codeBar = document.getElementById('file-name-display')
 
@@ -13,155 +14,306 @@ let openedFile = null
 let openedDirectory = null
 let lastOpened = null
 
-const addFileButton = document.getElementById('add-file-submit')
-const addDirButton = document.getElementById('add-dir-submit')
-const deleteButton = document.getElementById('delete-submit')
-const saveButton = document.getElementById('save-submit')
+const addFileForm = document.getElementById("add-file-form")
+const addDirForm = document.getElementById('add-dir-form')
+const deleteForm = document.getElementById('delete-form')
+const saveForm = document.getElementById('save-form')
 
-const updateLineNumbers = () => {
-    const numberOfLines = textarea.value.split('\n').length;
-    lineNumbers.innerHTML = Array(numberOfLines).fill('<span></span>').join('');
-};
 
-textarea.addEventListener('keyup', () => {
-    updateLineNumbers();
-})
-
-textarea.addEventListener('keydown', event => {
-    if (event.key === 'Tab') {
-        const start = textarea.selectionStart
-        const end = textarea.selectionEnd
-
-        textarea.value = textarea.value.substring(0, start) + '\t' + textarea.value.substring(end)
-
-        event.preventDefault()
-    }
-})
-
-function addFile() {
-    const name_field = document.getElementById('add-file-name')
-    const directory_field = document.getElementById('add-file-parent')
-    name_field.value = name_field.value.trim()
-
-    if (openedDirectory != null) directory_field.value = openedDirectory.path.toString()
-    else directory_field.value = ""
-}
-
-function addDirectory() {
-    const name_field = document.getElementById('add-dir-name')
-    const directory_field = document.getElementById('add-dir-parent')
-    name_field.value = name_field.value.trim()
-
-    if (openedDirectory != null) directory_field.value = openedDirectory.path.toString()
-    else directory_field.value = ""
-}
-
-function deleteItem() {
-    if (lastOpened === "directory") {
-        if (openedDirectory != null) {
-            const path_field = document.getElementById('delete-path')
-            const type_field = document.getElementById('delete-type')
-            path_field.value = openedDirectory.path.toString()
-            type_field.value = "directory"
-        }
-    }
-    else if (lastOpened === "file") {
-        if (openedFile != null) {
-            const path_field = document.getElementById('delete-path')
-            const type_field = document.getElementById('delete-type')
-            path_field.value = openedFile.path.toString()
-            type_field.value = "file"
-        }
-    }
-}
-
-function saveChanges() {
-    if (openedFile != null) {
-        const path_field = document.getElementById('save-path')
-        const content_field = document.getElementById('save-content')
-        path_field.value = openedFile.path.toString()
-        content_field.value = textarea.value
-    }
-}
+/*
+ * File tree
+ */
 
 function clickDirectory(evt) {
-    clickableDirectories.forEach((directory) => { directory.classList.remove('opened') })
-    clickableFiles.forEach((file) => { file.classList.remove('opened') })
-    evt.target.classList.toggle('opened')
+	clickableDirectories.forEach((directory) => {
+		directory.classList.remove('opened')
+	})
+	clickableFiles.forEach((file) => {
+		file.classList.remove('opened')
+	})
+	evt.target.classList.toggle('opened')
 
-    for (let i = 0; i < directories.length; i++) {
-        if (directories[i].path.toString() === evt.target.id.toString()) {
-            openedDirectory = directories[i]
-        }
-    }
+	openedDirectory = null
+	for (let i = 0; i < directories.length; i++) {
+		if (directories[i].path.toString() === evt.target.id.toString()) {
+			openedDirectory = directories[i]
+		}
+	}
 
-    lastOpened = "directory"
+	lastOpened = "directory"
 }
 
 function clickFile(evt) {
-    clickableDirectories.forEach((directory) => { directory.classList.remove('opened') })
-    clickableFiles.forEach((file) => { file.classList.remove('opened') })
-    evt.target.classList.toggle('opened')
+	clickableDirectories.forEach((directory) => {
+		directory.classList.remove('opened')
+	})
+	clickableFiles.forEach((file) => {
+		file.classList.remove('opened')
+	})
+	evt.target.classList.toggle('opened')
 
-    for (let i = 0; i < files.length; i++) {
-        if (files[i].path.toString() === evt.target.id.toString()) {
-            codeBar.innerHTML = files[i].name
-            openedFile = files[i]
-            textarea.value = files[i].content
-            updateLineNumbers()
-        }
-    }
+	openedFile = null
+	for (let i = 0; i < files.length; i++) {
+		if (files[i].path.toString() === evt.target.id.toString()) {
+			codeBar.innerHTML = files[i].name
+			openedFile = files[i]
+			textarea.value = files[i].content
+			updateLineNumbers()
+		}
+	}
 
-    lastOpened = "file"
+	lastOpened = "file"
 }
 
-addFileButton.addEventListener('click', () => addFile())
-addDirButton.addEventListener('click', () => addDirectory())
-deleteButton.addEventListener('click', () => deleteItem())
-saveButton.addEventListener('click', () => saveChanges())
+function generateFileTree(parent) {
+	let content = ""
+	const folderImage = document.getElementById('folder-image').value
+	const fileImage = document.getElementById('file-image').value
 
-for (let i = 0; i < clickableDirectories.length; i++) {
-    clickableDirectories[i].addEventListener('click', (evt) => clickDirectory(evt))
+	directories.forEach((dir) => {
+		if (dir.availability && dir.parent === parent) {
+			content +=
+				`<li><details>
+                <summary class="clickable-directories" id="${dir.path}">
+                <img src="${folderImage}" class="folder" alt=""> ${dir.name}
+                </summary>
+                <ul>`
+
+			content += generateFileTree(dir.path)
+
+			content += `</ul></details></li>`
+		}
+	})
+
+	files.forEach((file) => {
+		if (file.availability && file.parent === parent) {
+			content +=
+				`<li class="clickable-files" id="${file.path}">
+                <img src="${fileImage}" class="folder" alt=""> ${file.name}
+            </li>`
+		}
+	})
+
+	return content
 }
 
-for (let i = 0; i < clickableFiles.length; i++) {
-    clickableFiles[i].addEventListener('click', (evt) => clickFile(evt))
+function updateFileTree() {
+	const fileTreeContent = generateFileTree(homeDirectory.path)
+	const fileTree = document.getElementById('file-tree-container')
+	fileTree.innerHTML = fileTreeContent
+
+	clickableDirectories.forEach((directory) => {
+		directory.classList.remove('opened')
+	})
+	clickableFiles.forEach((file) => {
+		file.classList.remove('opened')
+	})
+
+	openedDirectory = null
+	openedFile = null
+
+	clickableDirectories = document.querySelectorAll('.clickable-directories')
+	clickableFiles = document.querySelectorAll('.clickable-files')
+
+	clickableDirectories.forEach((dir) => {
+		dir.addEventListener('click', (evt) => clickDirectory(evt))
+	})
+
+	clickableFiles.forEach((file) => {
+		file.addEventListener('click', (evt) => clickFile(evt))
+	})
 }
 
-function compile() {
-    const standard= document.querySelectorAll('#standard input[type="radio"]:checked')
-    const optimisations = document.querySelectorAll('#optimisation input[type="checkbox"]:checked')
-    const processor = document.querySelectorAll('#processor input[type="radio"]:checked')
-    let dependant = null;
-    if (processor[0] != null) {
-        switch (processor[0].value) {
-            case 'mcs51':
-                dependant = document.querySelectorAll('#dependent-mcs51 input[type="radio"]:checked')
-                break
-            case 'z80':
-                dependant = document.querySelectorAll('#dependent-z80 input[type="radio"]:checked')
-                break
-            case 'stm8':
-                dependant = document.querySelectorAll('#dependent-stm8 input[type="radio"]:checked')
-                break
-        }
-    }
+updateFileTree()
 
-    const standardInput = document.getElementById('compile-standard')
-    const optimisationsInput = document.getElementById('compile-optimisation')
-    const processorInput = document.getElementById('compile-processor')
-    const dependantInput = document.getElementById('compile-dependant')
-    const fileInput = document.getElementById('compile-file')
+/*
+ *  Code editor
+ */
+const updateLineNumbers = () => {
+	const numberOfLines = textarea.value.split('\n').length;
+	lineNumbers.innerHTML = Array(numberOfLines).fill('<span></span>').join('');
+};
 
-    standardInput.value = standard[0] == null ? "" : standard[0].value
-    optimisationsInput.value = ""
-    for (let i = 0; i < optimisations.length; i++) {
-        optimisationsInput.value += optimisations[i].value + " "
-    }
-    processorInput.value = processor[0] == null ? "" : processor[0].value
-    fileInput.value = openedFile == null ? "" : openedFile.path.toString()
-    dependantInput.value = dependant == null ? "" : dependant[0] == null ? "" : dependant[0].value
+textarea.addEventListener('keyup', () => {
+	updateLineNumbers();
+})
+
+textarea.addEventListener('keydown', event => {
+	if (event.key === 'Tab') {
+		const start = textarea.selectionStart
+		const end = textarea.selectionEnd
+
+		textarea.value = textarea.value.substring(0, start) + '\t' + textarea.value.substring(end)
+
+		event.preventDefault()
+	}
+})
+
+/*
+ *  Files modifications
+ */
+
+function fetchHandler(evt, form, onSuccess, onFail) {
+	evt.preventDefault()
+
+	const data = new FormData(form)
+
+	fetch(form.action, {
+		method: form.method,
+		body: data
+	})
+		.then(response => response.json())
+		.then(data => {
+			if (data.status === "ok") onSuccess(data)
+			else onFail(data)
+
+			updateFileTree()
+		})
+		.catch(error => {
+			alert(error)
+		})
 }
 
-const compileButton = document.getElementById('compile-submit')
-compileButton.addEventListener('click', compile)
+function addFile(evt) {
+	const parent_field = document.getElementById('add-file-parent')
+	parent_field.value = openedDirectory != null ? openedDirectory.path : homeDirectory.path
+
+	fetchHandler(evt, addFileForm,
+		(data) => {
+			files.push(
+				{
+					"path": data.path,
+					"name": data.name,
+					"parent": data.parent,
+					"content": data.content,
+					"availability": data.availability,
+				}
+			)
+		}, (data) => {
+			alert(data.message)
+		})
+}
+
+function addDirectory(evt) {
+	const parent_field = document.getElementById('add-dir-parent')
+	parent_field.value = openedDirectory != null ? openedDirectory.path : homeDirectory.path
+
+	fetchHandler(evt, addDirForm,
+		(data) => {
+			directories.push(
+				{
+					"path": data.path,
+					"name": data.name,
+					"parent": data.parent,
+					"availability": data.availability,
+				}
+			)
+		}, (data) => {
+			alert(data.message)
+		})
+}
+
+function deleteItem(evt) {
+	if (lastOpened === "directory") {
+		if (openedDirectory != null) {
+			const path_field = document.getElementById('delete-path')
+			const type_field = document.getElementById('delete-type')
+			path_field.value = openedDirectory.path.toString()
+			type_field.value = "directory"
+		}
+	} else if (lastOpened === "file") {
+		if (openedFile != null) {
+			const path_field = document.getElementById('delete-path')
+			const type_field = document.getElementById('delete-type')
+			path_field.value = openedFile.path.toString()
+			type_field.value = "file"
+		}
+	}
+
+	fetchHandler(evt, deleteForm,
+		(_data) => {
+			if (lastOpened === "directory") openedDirectory.availability = false;
+			else if (lastOpened === "file") openedFile.availability = false;
+		}, (data) => {
+			alert(data.message)
+		})
+}
+
+function saveChanges(evt) {
+	if (openedFile != null) {
+		const path_field = document.getElementById('save-path')
+		const content_field = document.getElementById('save-content')
+		path_field.value = openedFile.path.toString()
+		content_field.value = textarea.value
+	}
+
+	fetchHandler(evt, saveForm,
+		(data) => {
+			openedFile.content = data.content
+		}, (data) => {
+			alert(data.message)
+		})
+}
+
+addFileForm.addEventListener('submit', evt => addFile(evt))
+addDirForm.addEventListener('submit', evt => addDirectory(evt))
+deleteForm.addEventListener('submit', evt => deleteItem(evt))
+saveForm.addEventListener('submit', evt => saveChanges(evt))
+
+/*
+ *  Compiler
+ */
+
+const compileForm = document.getElementById('compile-form')
+
+function compile(evt) {
+	const standard = document.querySelectorAll('#standard input[type="radio"]:checked')
+	const optimisations = document.querySelectorAll('#optimisation input[type="checkbox"]:checked')
+	const processor = document.querySelectorAll('#processor input[type="radio"]:checked')
+	let dependant = null;
+	if (processor[0] != null) {
+		switch (processor[0].value) {
+			case 'mcs51':
+				dependant = document.querySelectorAll('#dependent-mcs51 input[type="radio"]:checked')
+				break
+			case 'z80':
+				dependant = document.querySelectorAll('#dependent-z80 input[type="radio"]:checked')
+				break
+			case 'stm8':
+				dependant = document.querySelectorAll('#dependent-stm8 input[type="radio"]:checked')
+				break
+		}
+	}
+
+	const standardInput = document.getElementById('compile-standard')
+	const optimisationsInput = document.getElementById('compile-optimisation')
+	const processorInput = document.getElementById('compile-processor')
+	const dependantInput = document.getElementById('compile-dependant')
+	const fileInput = document.getElementById('compile-file')
+
+	standardInput.value = standard[0] == null ? "" : standard[0].value
+	optimisationsInput.value = ""
+	for (let i = 0; i < optimisations.length; i++) {
+		optimisationsInput.value += optimisations[i].value + " "
+	}
+	processorInput.value = processor[0] == null ? "" : processor[0].value
+	fileInput.value = openedFile == null ? "" : openedFile.path.toString()
+	dependantInput.value = dependant == null ? "" : dependant[0] == null ? "" : dependant[0].value
+
+	fetchHandler(evt, compileForm,
+		(data) => {
+			files.push(
+				{
+					"path": data.path,
+					"name": data.name,
+					"parent": data.parent,
+					"content": data.content,
+					"availability": data.availability,
+				}
+			)
+		}, (data) => {
+			alert(data.message + "\n" + data.error)
+		})
+}
+
+compileForm.addEventListener('submit', evt => compile(evt))

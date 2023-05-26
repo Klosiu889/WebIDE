@@ -18,41 +18,37 @@
             <li><a href="#">File</a>
                 <ul>
                     <li id="add-file-button">
-                        <form action="/webIDE/add_file/" method="post">
+                        <form action="/webIDE/add_item/" method="post" id="add-file-form">
                             {% csrf_token %}
-                            <input type="hidden" name="parent" id="add-file-parent">
-                            <label for="add-file-name"></label><input type="text" name="name" id="add-file-name" class="add-name" placeholder="Type name: ">
+                            {{ form_add_file.as_p }}
                             <input type="submit" style="border: none" id="add-file-submit" class="dropdown" value="Add file">
                         </form>
                     </li>
                     <li id="add-dir-button">
-                        <form action="/webIDE/add_directory/" method="post">
+                        <form action="/webIDE/add_item/" method="post" id="add-dir-form">
                             {% csrf_token %}
-                            <input type="hidden" name="parent" id="add-dir-parent">
-                            <label for="add-dir-name"></label><input type="text" name="name" id="add-dir-name" class="add-name" placeholder="Type name: ">
+                            {{ form_add_dir.as_p }}
                             <input type="submit" style="border: none" id="add-dir-submit" class="dropdown" value="Add directory">
                         </form>
                     </li>
                     <li id="save-button">
-                        <form action="/webIDE/save_file/" method="post">
+                        <form action="/webIDE/save_file/" method="post" id="save-form">
                             {% csrf_token %}
-                            <input type="hidden" name="path" id="save-path">
-                            <input type="hidden" name="content" id="save-content">
+                            {{ form_save_file.as_p }}
                             <input type="submit" style="border: none" id="save-submit" class="dropdown" value="Save">
                         </form>
                     </li>
                     <li id="delete-button">
-                        <form action="/webIDE/delete_item/" method="post">
+                        <form action="/webIDE/delete_item/" method="post" id="delete-form">
                             {% csrf_token %}
-                            <input type="hidden" name="path" id="delete-path">
-                            <input type="hidden" name="type" id="delete-type">
+                            {{ form_delete_item.as_p }}
                             <input type="submit" style="border: none" id="delete-submit" class="dropdown" value="Delete">
                         </form>
                     </li>
                 </ul>
             </li>
             <li>
-                <form action="/webIDE/compile_file/" method="post">
+                <form action="/webIDE/compile_file/" method="post" id="compile-form">
                     {% csrf_token %}
                     <input type="hidden" name="standard" id="compile-standard">
                     <input type="hidden" name="optimisation" id="compile-optimisation">
@@ -71,8 +67,8 @@
     <div class="files">
         <div class="files-bar">Project</div>
         <div class="files-content tree">
-        <ul>
-            {% include 'file_tree.html' with parent_id=None %}
+        <ul id="file-tree-container">
+
         </ul>
         </div>
     </div>
@@ -156,8 +152,11 @@
 
 </div>
 
-{{ directories_list|json_script:"directories" }}
-{{ files_list|json_script:"files" }}
+{{ home|json_script:"home" }}
+{{ directories|json_script:"directories" }}
+{{ files|json_script:"files" }}
+<input type="hidden" id="folder-image" value="{% static 'webIDE/Images/mac-folder.png' %}">
+<input type="hidden" id="file-image" value="{% static 'webIDE/Images/mac-file.png' %}">
 <script src="{% static 'webIDE/Scripts/Buttons.js' %}"></script>
 <script src="{% static 'webIDE/Scripts/OpenTab.js' %}"></script>
 <script src="{% static 'webIDE/Scripts/FilesServices.js' %}"></script>
