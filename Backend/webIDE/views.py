@@ -1,8 +1,8 @@
 import subprocess
-from datetime import datetime
 
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.utils import timezone
 
 from .forms import AddFileForm, AddDirectoryForm, DeleteItemForm, SaveFileForm
 from .models import Directory, File
@@ -37,11 +37,11 @@ def render_website(request):
     else:
         home_db = Directory(path=home_path,
                             name=request.user.username,
-                            creation_date=datetime.now(),
+                            creation_date=timezone.now(),
                             owner=request.user,
                             availability=True,
-                            availability_change_date=datetime.now(),
-                            change_date=datetime.now(),
+                            availability_change_date=timezone.now(),
+                            change_date=timezone.now(),
                             parent=None,
                             description="Home directory"
                             )
@@ -77,22 +77,22 @@ def add_item(request):
                 return JsonResponse({'status': 'error', 'message': 'File already exists'})
             item = File(path=item_path,
                         name=item_name,
-                        creation_date=datetime.now(),
+                        creation_date=timezone.now(),
                         owner=request.user,
                         availability=True,
-                        availability_change_date=datetime.now(),
-                        change_date=datetime.now(),
+                        availability_change_date=timezone.now(),
+                        change_date=timezone.now(),
                         parent=parent)
         else:
             if Directory.objects.filter(path=item_path).exists() and Directory.objects.get(path=item_path).availability:
                 return JsonResponse({'status': 'error', 'message': 'Directory already exists'})
             item = Directory(path=item_path,
                              name=item_name,
-                             creation_date=datetime.now(),
+                             creation_date=timezone.now(),
                              owner=request.user,
                              availability=True,
-                             availability_change_date=datetime.now(),
-                             change_date=datetime.now(),
+                             availability_change_date=timezone.now(),
+                             change_date=timezone.now(),
                              parent=parent)
         item.save()
         return JsonResponse({
@@ -114,12 +114,12 @@ def delete_item(request):
         if item_type == 'directory':
             directory = Directory.objects.get(path=item_path)
             directory.availability = False
-            directory.availability_change_date = datetime.now()
+            directory.availability_change_date = timezone.now()
             directory.save()
         elif item_type == 'file':
             file = File.objects.get(path=item_path)
             file.availability = False
-            file.availability_change_date = datetime.now()
+            file.availability_change_date = timezone.now()
             file.save()
 
         return JsonResponse({'status': 'ok'})
@@ -133,7 +133,7 @@ def save_file(request):
         file_content = request.POST.get('content')
         file = File.objects.get(path=file_path)
         file.content = file_content
-        file.change_date = datetime.now()
+        file.change_date = timezone.now()
         file.save()
 
         return JsonResponse({'status': 'ok', 'content': file_content})
@@ -188,11 +188,11 @@ def compile_file(request):
         new_entry = File(
             path=new_file_path,
             name=new_file_name,
-            creation_date=datetime.now(),
+            creation_date=timezone.now(),
             owner=request.user,
             availability=True,
-            availability_change_date=datetime.now(),
-            change_date=datetime.now(),
+            availability_change_date=timezone.now(),
+            change_date=timezone.now(),
             parent=file.parent)
 
         new_entry.content = open("compile/" + file.name[:-2] + ".asm", 'r').read()
