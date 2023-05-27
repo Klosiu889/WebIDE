@@ -3,8 +3,8 @@ from django.db import models
 
 
 class Item(models.Model):
-    path = models.CharField(max_length=200, primary_key=True)
-    name = models.CharField(max_length=200)
+    path = models.CharField(max_length=1000, primary_key=True)
+    name = models.CharField(max_length=50)
     description = models.CharField(max_length=200, blank=True, null=True)
     creation_date = models.DateTimeField()
     owner = models.ForeignKey(User, on_delete=models.CASCADE)

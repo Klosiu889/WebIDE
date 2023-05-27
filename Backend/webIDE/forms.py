@@ -72,3 +72,30 @@ class SaveFileForm(forms.Form):
     class Meta:
         model = File
         fields = ('path', 'content')
+
+
+class CompileFileForm(forms.Form):
+    file = forms.CharField(
+        max_length=1000,
+        widget=forms.HiddenInput(attrs={'id': 'compile-file'})
+    )
+    standard = forms.CharField(
+        max_length=100,
+        widget=forms.HiddenInput(attrs={'id': 'compile-standard'})
+    )
+    optimisation = forms.CharField(
+        max_length=100,
+        widget=forms.HiddenInput(attrs={'id': 'compile-optimisation'})
+    )
+    processor = forms.CharField(
+        max_length=100,
+        widget=forms.HiddenInput(attrs={'id': 'compile-processor'})
+    )
+    dependant = forms.CharField(
+        max_length=100,
+        widget=forms.HiddenInput(attrs={'id': 'compile-dependant'})
+    )
+
+    class Meta:
+        model = File
+        fields = ('path', 'content')

@@ -51,11 +51,7 @@
             <li>
                 <form action="/webIDE/compile_file/" method="post" id="compile-form">
                     {% csrf_token %}
-                    <input type="hidden" name="standard" id="compile-standard">
-                    <input type="hidden" name="optimisation" id="compile-optimisation">
-                    <input type="hidden" name="processor" id="compile-processor">
-                    <input type="hidden" name="dependant" id="compile-dependant">
-                    <input type="hidden" name="file" id="compile-file">
+                    {{ form_compile_file.as_p }}
                     <input type="submit" id="compile-submit" value="Compile">
                 </form>
             </li>

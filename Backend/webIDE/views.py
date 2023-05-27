@@ -4,7 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 
-from .forms import AddFileForm, AddDirectoryForm, DeleteItemForm, SaveFileForm
+from .forms import AddFileForm, AddDirectoryForm, DeleteItemForm, SaveFileForm, CompileFileForm
 from .models import Directory, File
 
 
@@ -60,6 +60,7 @@ def render_website(request):
         'form_add_dir': AddDirectoryForm(),
         'form_delete_item': DeleteItemForm(),
         'form_save_file': SaveFileForm(),
+        'form_compile_file': CompileFileForm(),
     }
     return render(request, 'index.html', data)
 
