@@ -1,10 +1,17 @@
 import subprocess
+from shlex import quote as shlex_quote
 
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.utils import timezone
 
-from .forms import AddFileForm, AddDirectoryForm, DeleteItemForm, SaveFileForm, CompileFileForm
+from .forms import (
+    AddDirectoryForm,
+    AddFileForm,
+    CompileFileForm,
+    DeleteItemForm,
+    SaveFileForm,
+)
 from .models import Directory, File
 
 
@@ -172,10 +179,10 @@ def compile_file(request):
         file_create = open("compile/" + file.name, 'w')
         file_create.write(file.content)
         file_create.close()
-        result = subprocess.run("cd compile && " + command + " 2> error.err", shell=True)
+        result = subprocess.run(shlex_quote("cd compile && ") + command + " 2> error.err", shell=True)
 
         if result.returncode != 0:
-            error = open("compile/error.err", 'r').read()
+            error = open("compile/error.err").read()
             subprocess.run("rm -rf compile", shell=True)
             return JsonResponse({
                 'status': 'error',
@@ -196,7 +203,7 @@ def compile_file(request):
             change_date=timezone.now(),
             parent=file.parent)
 
-        new_entry.content = open("compile/" + file.name[:-2] + ".asm", 'r').read()
+        new_entry.content = open("compile/" + file.name[:-2] + ".asm").read()
         new_entry.save()
         subprocess.run("rm -rf compile", shell=True)
 

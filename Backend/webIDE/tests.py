@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.utils import timezone
 
-from .models import Item, Directory, File
+from .models import Directory, File, Item
 
 
 class ItemTestCase(TestCase):
@@ -237,4 +237,3 @@ class FileTestCase(TestCase):
         )
 
         self.assertEqual(file_test.availability, True)
-
