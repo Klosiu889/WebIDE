@@ -238,4 +238,3 @@ class FileTestCase(TestCase):
 
         self.assertEqual(file_test.availability, True)
 
-
