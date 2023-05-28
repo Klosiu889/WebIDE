@@ -33,6 +33,7 @@ function clickDirectory(evt) {
 	})
 	evt.target.classList.toggle('opened')
 
+	openedFile = null
 	openedDirectory = null
 	for (let i = 0; i < directories.length; i++) {
 		if (directories[i].path.toString() === evt.target.id.toString()) {
@@ -53,6 +54,7 @@ function clickFile(evt) {
 	evt.target.classList.toggle('opened')
 
 	openedFile = null
+	openedDirectory = null
 	for (let i = 0; i < files.length; i++) {
 		if (files[i].path.toString() === evt.target.id.toString()) {
 			codeBar.innerHTML = files[i].name
@@ -302,15 +304,21 @@ function compile(evt) {
 
 	fetchHandler(evt, compileForm,
 		(data) => {
-			files.push(
-				{
-					"path": data.path,
-					"name": data.name,
-					"parent": data.parent,
-					"content": data.content,
-					"availability": data.availability,
-				}
-			)
+			const file = files.find(file => file.path === data.path)
+			if (file) {
+				file.content = data.content
+				file.availability = data.availability
+			} else {
+				files.push(
+					{
+						"path": data.path,
+						"name": data.name,
+						"parent": data.parent,
+						"content": data.content,
+						"availability": data.availability,
+					}
+				)
+			}
 		}, (data) => {
 			alert(data.message + "\n" + data.error)
 		})

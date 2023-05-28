@@ -6,7 +6,7 @@ from .models import Directory, File
 class AddFileForm(forms.ModelForm):
     name = forms.CharField(
         label='',
-        max_length=100,
+        max_length=50,
         widget=forms.TextInput(attrs={'placeholder': 'File name',
                                       'class': 'add-name',
                                       'id': 'add-file-name'})
@@ -16,18 +16,19 @@ class AddFileForm(forms.ModelForm):
         widget=forms.HiddenInput(attrs={'id': 'add-file-parent'})
     )
     type = forms.CharField(
-        widget=forms.HiddenInput(attrs={'value': 'file'})
+        initial='file',
+        widget=forms.HiddenInput()
     )
 
     class Meta:
         model = File
-        fields = ('name', 'parent')
+        fields = ('name',)
 
 
 class AddDirectoryForm(forms.Form):
     name = forms.CharField(
         label='',
-        max_length=100,
+        max_length=50,
         widget=forms.TextInput(attrs={'placeholder': 'Directory name',
                                       'class': 'add-name'})
     )
@@ -36,12 +37,13 @@ class AddDirectoryForm(forms.Form):
         widget=forms.HiddenInput(attrs={'id': 'add-dir-parent'})
     )
     type = forms.CharField(
-        widget=forms.HiddenInput(attrs={'value': 'directory'})
+        initial='directory',
+        widget=forms.HiddenInput()
     )
 
     class Meta:
         model = Directory
-        fields = ('name', 'parent')
+        fields = ('name',)
 
 
 class DeleteItemForm(forms.Form):
@@ -56,7 +58,7 @@ class DeleteItemForm(forms.Form):
 
     class Meta:
         model = Directory
-        fields = ('path', 'type')
+        fields = ('path',)
 
 
 class SaveFileForm(forms.Form):

@@ -2,14 +2,13 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.utils import timezone
-
-from .models import Directory, File, Item
+from webIDE.models import Directory, File, Item
 
 
 class ItemTestCase(TestCase):
-    def setUp(self):
-        item = Item()
-        self.assertEqual(TypeError, item.save())
+    def test_abstract_class(self):
+        with self.assertRaises(TypeError):
+            item = Item()
 
 
 class DirectoryTestCase(TestCase):

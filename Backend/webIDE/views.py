@@ -1,5 +1,5 @@
+import shutil
 import subprocess
-from shlex import quote as shlex_quote
 
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -34,7 +34,7 @@ def render_website(request):
             'path': file.path,
             'name': file.name,
             'parent': file.parent.path if file.parent else "",
-            'content': file.content if file.content else '',
+            'content': file.content,
             'availability': file.availability,
         })
 
@@ -108,7 +108,7 @@ def add_item(request):
             'name': item.name,
             'path': item.path,
             'parent': item.parent.path,
-            'content': "",
+            'content': '',
             'availability': True,
         })
     else:
@@ -159,31 +159,31 @@ def compile_file(request):
         file_path = request.POST.get('file')
         file = File.objects.get(path=file_path)
 
-        command = "sdcc"
+        flags = []
         if standard != "":
-            command += " --" + standard
+            flags.append("--" + standard)
 
         if processor != "":
-            command += " -" + processor
+            flags.append("-" + processor)
 
         for optimisation in optimisations_split:
             if optimisation != "":
-                command += " --" + optimisation
+                flags.append("--" + optimisation)
 
         if dependant != "":
-            command += " --" + dependant
+            flags.append("--" + dependant)
 
-        command += " " + file.name
-
-        subprocess.run("mkdir compile", shell=True)
+        subprocess.run(["mkdir", "compile"], shell=False)
         file_create = open("compile/" + file.name, 'w')
         file_create.write(file.content)
         file_create.close()
-        result = subprocess.run(shlex_quote("cd compile && ") + command + " 2> error.err", shell=True)
+
+        command = ["sdcc"] + flags + [file.name]
+        result = subprocess.run(command, shell=False, cwd="compile", capture_output=True)
 
         if result.returncode != 0:
-            error = open("compile/error.err").read()
-            subprocess.run("rm -rf compile", shell=True)
+            error = result.stderr.decode('utf-8')
+            shutil.rmtree("compile")
             return JsonResponse({
                 'status': 'error',
                 'message': 'Compilation failed with error code: ' + str(result.returncode),
@@ -201,11 +201,12 @@ def compile_file(request):
             availability=True,
             availability_change_date=timezone.now(),
             change_date=timezone.now(),
-            parent=file.parent)
+            parent=file.parent
+        )
 
         new_entry.content = open("compile/" + file.name[:-2] + ".asm").read()
         new_entry.save()
-        subprocess.run("rm -rf compile", shell=True)
+        shutil.rmtree("compile")
 
         return JsonResponse({
             'status': 'ok',
