@@ -112,7 +112,7 @@ def add_item(request):
             'availability': True,
         })
     else:
-        return JsonResponse({'status': 'error'})
+        return JsonResponse({'status': 'error', 'message': 'Name cannot be empty'})
 
 
 def delete_item(request):
@@ -132,7 +132,7 @@ def delete_item(request):
 
         return JsonResponse({'status': 'ok'})
     else:
-        return JsonResponse({'status': 'error', 'message': 'Deleting failed'})
+        return JsonResponse({'status': 'error', 'message': 'Item was not selected'})
 
 
 def save_file(request):
@@ -144,9 +144,9 @@ def save_file(request):
         file.change_date = timezone.now()
         file.save()
 
-        return JsonResponse({'status': 'ok', 'content': file_content})
+        return JsonResponse({'status': 'ok', 'content': file.content})
     else:
-        return JsonResponse({'status': 'error', 'message': 'Saving failed.'})
+        return JsonResponse({'status': 'error', 'message': 'File was not selected'})
 
 
 def compile_file(request):
@@ -217,7 +217,11 @@ def compile_file(request):
             'content': new_entry.content
         })
     else:
-        return JsonResponse({'status': 'error', 'message': 'File was not selected.'})
+        return JsonResponse({
+            'status': 'error',
+            'message': 'File was not selected',
+            'error': ''
+        })
 
 
 def index(request):
