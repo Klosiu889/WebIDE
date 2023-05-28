@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.test import Client, TestCase
+from django.test import Client, TestCase, tag
 from django.utils import timezone
 from webIDE.models import Directory, File
 
@@ -305,6 +305,7 @@ class SaveFileTestCase(TestCase):
         self.save_file_request(data, expected_response)
 
 
+@tag('compile')
 class CompileFileTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='test-user', password='test-password')
