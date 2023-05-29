@@ -5,3 +5,7 @@ line_length = 88
 default_section = "THIRDPARTY"
 known_first_party = []
 known_third_party = ["django", "webIDE"]
+
+[tool.black]
+line-length = 88
+include = '\.pyi?$'

@@ -7,8 +7,10 @@ let files = JSON.parse(document.getElementById('files').textContent)
 
 const codeBar = document.getElementById('file-name-display')
 
-const textarea = document.getElementById('code-textarea')
-const lineNumbers = document.querySelector('.line-numbers')
+const textareaCode = document.getElementById('code-textarea')
+const textareaFragment = document.getElementById('fragment-textarea')
+const lineNumbersCode = document.querySelector('.code .line-numbers')
+const lineNumbersFragment = document.querySelector('.fragment .line-numbers')
 
 let openedFile = null
 let openedDirectory = null
@@ -18,7 +20,7 @@ const addFileForm = document.getElementById("add-file-form")
 const addDirForm = document.getElementById('add-dir-form')
 const deleteForm = document.getElementById('delete-form')
 const saveForm = document.getElementById('save-form')
-
+const downloadForm = document.getElementById('download-form')
 
 /*
  * File tree
@@ -59,8 +61,8 @@ function clickFile(evt) {
 		if (files[i].path.toString() === evt.target.id.toString()) {
 			codeBar.innerHTML = files[i].name
 			openedFile = files[i]
-			textarea.value = files[i].content
-			updateLineNumbers()
+			textareaCode.value = files[i].content
+			updateLineNumbersCode()
 		}
 	}
 
@@ -131,21 +133,41 @@ updateFileTree()
 /*
  *  Code editor
  */
-const updateLineNumbers = () => {
-	const numberOfLines = textarea.value.split('\n').length;
-	lineNumbers.innerHTML = Array(numberOfLines).fill('<span></span>').join('');
+const updateLineNumbersCode = () => {
+	const numberOfLinesCode = textareaCode.value.split('\n').length;
+	lineNumbersCode.innerHTML = Array(numberOfLinesCode).fill('<span></span>').join('');
 };
 
-textarea.addEventListener('keyup', () => {
-	updateLineNumbers();
+textareaCode.addEventListener('keyup', () => {
+	updateLineNumbersCode();
 })
 
-textarea.addEventListener('keydown', event => {
+textareaCode.addEventListener('keydown', event => {
 	if (event.key === 'Tab') {
-		const start = textarea.selectionStart
-		const end = textarea.selectionEnd
+		const start = textareaCode.selectionStart
+		const end = textareaCode.selectionEnd
 
-		textarea.value = textarea.value.substring(0, start) + '\t' + textarea.value.substring(end)
+		textareaCode.value = textareaCode.value.substring(0, start) + '\t' + textareaCode.value.substring(end)
+
+		event.preventDefault()
+	}
+})
+
+const updateLineNumbersFragment = () => {
+	const numberOfLinesFragment = textareaFragment.value.split('\n').length;
+	lineNumbersFragment.innerHTML = Array(numberOfLinesFragment).fill('<span></span>').join('');
+};
+
+textareaFragment.addEventListener('keyup', () => {
+	updateLineNumbersFragment();
+})
+
+textareaFragment.addEventListener('keydown', event => {
+	if (event.key === 'Tab') {
+		const start = textareaFragment.selectionStart
+		const end = textareaFragment.selectionEnd
+
+		textareaFragment.value = textareaFragment.value.substring(0, start) + '\t' + textareaFragment.value.substring(end)
 
 		event.preventDefault()
 	}
@@ -246,7 +268,7 @@ function saveChanges(evt) {
 		const path_field = document.getElementById('save-path')
 		const content_field = document.getElementById('save-content')
 		path_field.value = openedFile.path.toString()
-		content_field.value = textarea.value
+		content_field.value = textareaCode.value
 	}
 
 	fetchHandler(evt, saveForm,
@@ -257,10 +279,18 @@ function saveChanges(evt) {
 		})
 }
 
+function downloadFile(evt) {
+	if (openedFile != null) {
+		const path_field = document.getElementById('download-path')
+		path_field.value = openedFile.path.toString()
+	}
+}
+
 addFileForm.addEventListener('submit', evt => addFile(evt))
 addDirForm.addEventListener('submit', evt => addDirectory(evt))
 deleteForm.addEventListener('submit', evt => deleteItem(evt))
 saveForm.addEventListener('submit', evt => saveChanges(evt))
+downloadForm.addEventListener('submit', evt => downloadFile(evt))
 
 /*
  *  Compiler
@@ -319,8 +349,12 @@ function compile(evt) {
 					}
 				)
 			}
+
+			textareaFragment.value = data.content
+			updateLineNumbersFragment()
 		}, (data) => {
-			alert(data.message + "\n" + data.error)
+			textareaFragment.value = data.error
+			updateLineNumbersFragment()
 		})
 }
 

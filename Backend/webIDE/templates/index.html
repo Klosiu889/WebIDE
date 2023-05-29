@@ -46,6 +46,13 @@
                             <input type="submit" style="border: none" id="delete-submit" class="dropdown" value="Delete">
                         </form>
                     </li>
+                    <li id="download-button">
+                        <form action="/webIDE/download_file/" method="post" id="download-form">
+                            {% csrf_token %}
+                            {{ form_download_file.as_p }}
+                            <input type="submit" style="border: none" id="delete-submit" class="dropdown" value="Download">
+                        </form>
+                    </li>
                 </ul>
             </li>
             <li>
@@ -83,7 +90,12 @@
         </div>
     </div>
     <div class="fragment">
-        <div id="fragment-container"></div>
+        <div class="fragment-display">
+            <div class="line-numbers">
+                <span></span>
+            </div>
+            <label for="fragment-textarea"></label><textarea id="fragment-textarea"></textarea>
+        </div>
     </div>
     <div class="tabs">
         <button id="standard-button" class="tabs-button" onclick="openTab(null, 'standard')">Standard</button>

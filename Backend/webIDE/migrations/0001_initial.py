@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,38 +14,82 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Directory',
+            name="Directory",
             fields=[
-                ('path', models.CharField(max_length=1000, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=50)),
-                ('description', models.CharField(blank=True, max_length=200, null=True)),
-                ('creation_date', models.DateTimeField()),
-                ('availability', models.BooleanField(default=True)),
-                ('availability_change_date', models.DateTimeField()),
-                ('change_date', models.DateTimeField()),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='webIDE.directory')),
+                (
+                    "path",
+                    models.CharField(
+                        max_length=1000, primary_key=True, serialize=False
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                (
+                    "description",
+                    models.CharField(blank=True, max_length=200, null=True),
+                ),
+                ("creation_date", models.DateTimeField()),
+                ("availability", models.BooleanField(default=True)),
+                ("availability_change_date", models.DateTimeField()),
+                ("change_date", models.DateTimeField()),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="webIDE.directory",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='File',
+            name="File",
             fields=[
-                ('path', models.CharField(max_length=1000, primary_key=True, serialize=False)),
-                ('name', models.CharField(max_length=50)),
-                ('description', models.CharField(blank=True, max_length=200, null=True)),
-                ('creation_date', models.DateTimeField()),
-                ('availability', models.BooleanField(default=True)),
-                ('availability_change_date', models.DateTimeField()),
-                ('change_date', models.DateTimeField()),
-                ('content', models.TextField(blank=True, null=True)),
-                ('owner', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('parent', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='webIDE.directory')),
+                (
+                    "path",
+                    models.CharField(
+                        max_length=1000, primary_key=True, serialize=False
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                (
+                    "description",
+                    models.CharField(blank=True, max_length=200, null=True),
+                ),
+                ("creation_date", models.DateTimeField()),
+                ("availability", models.BooleanField(default=True)),
+                ("availability_change_date", models.DateTimeField()),
+                ("change_date", models.DateTimeField()),
+                ("content", models.TextField(blank=True, null=True)),
+                (
+                    "owner",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                (
+                    "parent",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="webIDE.directory",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
     ]

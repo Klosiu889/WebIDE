@@ -112,6 +112,14 @@ body {
     border-bottom: 10px solid var(--secondary-color);
 }
 
+.fragment-display {
+    background-color: var(--primary-color);
+}
+
+.fragment textarea {
+    background-color: var(--primary-color);
+}
+
 .tabs {
     background-color: var(--primary-color);
 }

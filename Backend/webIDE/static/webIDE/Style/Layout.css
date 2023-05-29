@@ -246,19 +246,19 @@ i {
     width: 100%;
 }
 
-.code .line-numbers {
+.line-numbers {
     width: 20px;
     line-height: 1.5em;
 
     text-align: right;
 }
 
-.code .line-numbers span {
+.line-numbers span {
     counter-increment: linenumber;
     margin-bottom: 50px;
 }
 
-.code .line-numbers span::before {
+.line-numbers span::before {
     content: counter(linenumber);
     display: block;
 }
@@ -268,9 +268,31 @@ i {
 
     display: flex;
     overflow: auto;
-    font-size: 0.5em;
+    font-size: 1em;
 
-    padding: 1vh;
+    padding-left: 10px;
+}
+
+.fragment-display {
+    display: inline-flex;
+    gap: 10px;
+    border-radius: 2px;
+    font-size: 1em;
+    margin: 10px 0 10px 0;
+    width: 100%;
+}
+
+.fragment textarea {
+    font-size: 1em;
+    line-height: 1.5em;
+    font-family: var(--font);
+    overflow-y: hidden;
+    padding: 0 20px 0 0;
+    border: 0;
+    outline: none;
+    resize: none;
+    width: 100%;
+    pointer-events: none;
 }
 
 .tabs {
