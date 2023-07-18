@@ -2,6 +2,7 @@
     --primary-color: #D8DEE9;
     --secondary-color: #ECEFF4;
     --trimary-color: #999;
+    --website-color: #0D1117;
     --text-color: #0D1117;
     --highlight-color: green;
     --button-hover-color: rgba(138, 168, 197);
@@ -11,6 +12,7 @@
     --primary-color: #0D1117;
     --secondary-color: #161B22;
     --text-color: #D8DEE9;
+    --website-color: #0D1117;
     --button-hover-color: #4C566A;
     --highlight-color: greenyellow;
 }
@@ -22,7 +24,7 @@
 }
 
 body {
-    background-color: var(--secondary-color);
+    background-color: var(--website-color);
 }
 
 .menu {

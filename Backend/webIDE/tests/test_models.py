@@ -8,7 +8,7 @@ from webIDE.models import Directory, File, Item
 class ItemTestCase(TestCase):
     def test_abstract_class(self):
         with self.assertRaises(TypeError):
-            item = Item()
+            Item()
 
 
 class DirectoryTestCase(TestCase):

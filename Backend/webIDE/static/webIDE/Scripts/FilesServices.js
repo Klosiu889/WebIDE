@@ -279,7 +279,7 @@ function saveChanges(evt) {
 		})
 }
 
-function downloadFile(evt) {
+function downloadFile() {
 	if (openedFile != null) {
 		const path_field = document.getElementById('download-path')
 		path_field.value = openedFile.path.toString()
@@ -290,7 +290,7 @@ addFileForm.addEventListener('submit', evt => addFile(evt))
 addDirForm.addEventListener('submit', evt => addDirectory(evt))
 deleteForm.addEventListener('submit', evt => deleteItem(evt))
 saveForm.addEventListener('submit', evt => saveChanges(evt))
-downloadForm.addEventListener('submit', evt => downloadFile(evt))
+downloadForm.addEventListener('submit', () => downloadFile())
 
 /*
  *  Compiler
