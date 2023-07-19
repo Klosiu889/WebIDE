@@ -1,8 +1,14 @@
 # Web Integrated Development Environment
+
+![Tests](https://github.com/Klosiu889/WebIDE/actions/workflows/django.yml/badge.svg?event=push)
+[![codecov](https://codecov.io/gh/Klosiu889/WebIDE/branch/main/graph/badge.svg?token=ASQBPQTT2G)](https://codecov.io/gh/Klosiu889/WebIDE)
+
 A university project to make simple website allowing file management and comilation of C programs.
 
 ## Usage
+
 First you will need to install required python packages:
+
 ```shell
 pip install -r requirements.txt
 ```
