@@ -3,6 +3,8 @@ import os
 from django.core.wsgi import get_wsgi_application
 from django.test import TestCase
 
+from Backend import wsgi
+
 
 class WSGITestCase(TestCase):
     def test_asgi_application(self):
