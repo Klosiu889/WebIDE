@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from django.test import Client, TestCase, tag
+from django.test import Client, TestCase
 from django.utils import timezone
 from webIDE.models import Directory, File
 
@@ -12,7 +12,32 @@ class IndexTestCase(TestCase):
         self.client = Client()
         self.client.login(username="test-user", password="test-password")
 
-    def test_index(self):
+    def test_login_first(self):
+        response = self.client.get("/webIDE/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "index.html")
+
+    def test_login_again(self):
+        self.client.get("/webIDE/")
+        response = self.client.get("/webIDE/")
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, "index.html")
+
+    def test_login_with_existing_files(self):
+        self.client.get("/webIDE/")
+        test_file = File(
+            path="test-user/test-file",
+            name="test-file",
+            creation_date=timezone.now(),
+            owner=self.user,
+            availability=True,
+            availability_change_date=timezone.now(),
+            change_date=timezone.now(),
+            parent=None,
+            content="test-content",
+        )
+        test_file.save()
+
         response = self.client.get("/webIDE/")
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "index.html")
@@ -306,7 +331,6 @@ class DownloadFileTestCase(TestCase):
         self.assertJSONEqual(response.content, expected_response)
 
 
-@tag("compile")
 class CompileFileTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(
@@ -457,6 +481,25 @@ class CompileFileTestCase(TestCase):
             "status": "error",
             "message": "File was not selected",
             "error": "",
+        }
+
+        self.compile_file_request(data, expected_response)
+
+    def test_compile_flags(self):
+        data = {
+            "file": "test-user/test-file.c",
+            "standard": "C11",
+            "optimisation": "nogcse",
+            "processor": "z80",
+            "dependant": "reserve-regs-iy",
+        }
+        expected_response = {
+            "status": "ok",
+            "name": "test-file.asm",
+            "path": "test-user/test-file.asm",
+            "parent": "test-user",
+            "availability": True,
+            "content": "",
         }
 
         self.compile_file_request(data, expected_response)

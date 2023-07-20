@@ -10,4 +10,5 @@ class ASGITestCase(TestCase):
         self.assertIsNotNone(application)
 
     def test_django_settings_module(self):
-        self.assertEqual(os.environ.get("DJANGO_SETTINGS_MODULE"), "Backend.settings")
+        django_settings_module = os.environ.get("DJANGO_SETTINGS_MODULE")
+        self.assertEqual(django_settings_module, "Backend.settings")
