@@ -23,7 +23,7 @@ html, body {
         "files code fragment"
         "files tabs tabs"
         "files options options";
-    gap: 10px;
+    gap: 0;
 }
 
 @media(max-width: 660px){
@@ -41,7 +41,7 @@ html, body {
             "fragment"
             "tabs"
             "options";
-        gap: 10px;
+        gap: 0;
     }
 }
 
