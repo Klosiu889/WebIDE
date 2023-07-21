@@ -1,6 +1,7 @@
 # Web Integrated Development Environment
 
-![Tests](https://github.com/Klosiu889/WebIDE/actions/workflows/django.yml/badge.svg?event=push)
+![Tests](https://github.com/Klosiu889/WebIDE/actions/workflows/test.yml/badge.svg?event=push)
+![Lint](https://github.com/Klosiu889/WebIDE/actions/workflows/lint.yml/badge.svg?event=push)
 [![codecov](https://codecov.io/gh/Klosiu889/WebIDE/branch/main/graph/badge.svg?token=ASQBPQTT2G)](https://codecov.io/gh/Klosiu889/WebIDE)
 
 A university project to make simple website allowing file management and comilation of C programs.
