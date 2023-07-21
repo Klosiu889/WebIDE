@@ -1,0 +1,11 @@
+.coverage
+.gitignore
+.pre-commit-config.yaml
+pyproject.toml
+README.md
+.github
+**/migrations/*
+**/tests
+**/__pycache__
+Backend/db.sqlite3
+!**/__init__.py
