@@ -2,7 +2,7 @@
 
 ![Tests](https://github.com/Klosiu889/WebIDE/actions/workflows/test.yml/badge.svg?event=push)
 ![Lint](https://github.com/Klosiu889/WebIDE/actions/workflows/lint.yml/badge.svg?event=push)
-[![Docker Pulls](https://badgen.net/docker/pulls/klosiu889/django_web_ide?icon=docker&label=pulls)](https://hub.docker.com/r/trueosiris/godaddypy/)
+[![Docker Pulls](https://badgen.net/docker/pulls/klosiu889/django_web_ide?icon=docker&label=pulls)](https://hub.docker.com/repository/docker/klosiu889/django_web_ide/general)
 [![codecov](https://codecov.io/gh/Klosiu889/WebIDE/branch/main/graph/badge.svg?token=ASQBPQTT2G)](https://codecov.io/gh/Klosiu889/WebIDE)
 
 A university project to make simple website allowing file management and compilation of C programs.
