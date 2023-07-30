@@ -2,7 +2,7 @@
 
 ![Tests](https://github.com/Klosiu889/WebIDE/actions/workflows/test.yml/badge.svg?event=push)
 ![Lint](https://github.com/Klosiu889/WebIDE/actions/workflows/lint.yml/badge.svg?event=push)
-[![Docker Pulls](https://badgen.net/docker/pulls/klosiu889/django_web_ide?icon=docker&label=pulls)](https://hub.docker.com/repository/docker/klosiu889/django_web_ide/general)
+[![Docker Pulls](https://badgen.net/docker/pulls/klosiu889/django_web_ide?icon=docker&label=pulls)](https://hub.docker.com/r/klosiu889/django_web_ide/)
 [![codecov](https://codecov.io/gh/Klosiu889/WebIDE/branch/main/graph/badge.svg?token=ASQBPQTT2G)](https://codecov.io/gh/Klosiu889/WebIDE)
 
 A university project to make simple website allowing file management and compilation of C programs.
@@ -49,6 +49,7 @@ Docker container starts django server by automatically.
 ## Actions
 
 On every push three github actions are performed:
+
 1. Running tests with coverage and upload]ing them to [Codecov](https://app.codecov.io/gh/Klosiu889/WebIDE).
-2. Building docker image and uploading them to [dockerhub](https://hub.docker.com/repository/docker/klosiu889/django_web_ide/general).
+2. Building docker image and uploading them to [dockerhub](https://hub.docker.com/r/klosiu889/django_web_ide/).
 3. Running linting job using [Black github action](https://github.com/rickstaa/action-black).
