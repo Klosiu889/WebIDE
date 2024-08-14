@@ -2,7 +2,7 @@ asgiref==3.8.1
 cfgv==3.4.0
 coverage==7.5.3
 distlib==0.3.8
-Django==5.0.6
+Django==5.0.7
 filelock==3.14.0
 identify==2.5.36
 nodeenv==1.9.1
